@@ -1,0 +1,50 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Caches and logs
+.pytest_cache/
+*.log
+artifacts/cache/
+artifacts/logs/
+
+# Large training models / binary weights
+# Note: models are generated via `python -m windtwin.benchmark` / cached generator models
+artifacts/models/*.joblib
+
+# Large CARE dataset (766 MB) - fetch with `python data/fetch_care.py`
+data/CARE_To_Compare/
+data/processed/
+*.parquet
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+
+# Environment and credentials
+.env
+.env.local
+.env.*.local
+*.pem
+*.key
+
+# Operating System files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE and editors
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Node / npm (if any local tooling used)
+node_modules/
+npm-debug.log*

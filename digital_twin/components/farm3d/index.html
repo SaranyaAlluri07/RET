@@ -1,0 +1,227 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wind farm 3D</title>
+<style>
+  html, body { margin: 0; padding: 0; background: transparent; font-family: Inter, "Segoe UI", Roboto, Arial, sans-serif; }
+  #wrap { position: relative; width: 100%; border-radius: 16px; overflow: hidden; border: 1px solid #E6EEF5;
+          background: linear-gradient(180deg, #CFE8F6 0%, #EAF5FB 48%, #DCEFD9 48.2%, #C9E4C1 100%); }
+  canvas { display: block; width: 100%; cursor: grab; touch-action: none; }
+  canvas.drag { cursor: grabbing; }
+  .hud { position: absolute; font-size: 12px; color: #1F2D3D; background: #ffffffd9; border-radius: 10px;
+         padding: 6px 10px; box-shadow: 0 2px 10px rgba(30,80,120,.12); pointer-events: none; }
+  #legend { left: 12px; bottom: 12px; display: flex; gap: 12px; align-items: center; }
+  #legend i { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 4px; }
+  #help { right: 12px; bottom: 12px; color: #6B7C93; }
+  #info { left: 12px; top: 12px; font-weight: 600; }
+</style>
+</head>
+<body>
+<div id="wrap">
+  <canvas id="c"></canvas>
+  <div id="info" class="hud">Wind farm</div>
+  <div id="legend" class="hud"><span><i style="background:#16A34A"></i>normal</span><span><i style="background:#F59E0B"></i>warning</span>
+    <span><i style="background:#E5484D"></i>fault</span><span><i style="background:#7F1D1D"></i>tripped</span></div>
+  <div id="help" class="hud">drag: rotate · wheel: zoom · click: select · double-click: reset</div>
+</div>
+<script>
+// ---------------------------------------------------------------- Streamlit component protocol (no build tools needed)
+function send(type, data) { window.parent.postMessage(Object.assign({ isStreamlitMessage: true, type: type }, data || {}), "*"); }
+let ARGS = { turbines: [], wind_dir: 220, wind_speed: 7, height: 520, title: "" };
+window.addEventListener("message", (ev) => {
+  if (!ev.data || ev.data.type !== "streamlit:render") return;
+  const a = ev.data.args || {};
+  ARGS = Object.assign(ARGS, a);
+  if (typeof a.turbines === "string") { try { ARGS.turbines = JSON.parse(a.turbines); } catch (e) {} }
+  resize();
+});
+send("streamlit:componentReady", { apiVersion: 1 });
+
+// ---------------------------------------------------------------- canvas + camera
+const cv = document.getElementById("c"), ctx = cv.getContext("2d");
+let W = 800, H = 520, DPR = Math.max(1, window.devicePixelRatio || 1);
+const cam0 = { az: -30, el: 20, dist: 1350 };
+let cam = Object.assign({}, cam0);
+function resize() {
+  W = cv.parentElement.clientWidth || 800; H = ARGS.height || 520;
+  cv.width = W * DPR; cv.height = H * DPR; cv.style.height = H + "px";
+  send("streamlit:setFrameHeight", { height: H + 2 });
+}
+window.addEventListener("resize", resize);
+
+const rad = (d) => d * Math.PI / 180;
+function camBasis() {
+  const az = rad(cam.az), el = rad(cam.el);
+  const eye = [cam.dist * Math.cos(el) * Math.sin(az), -cam.dist * Math.cos(el) * Math.cos(az), cam.dist * Math.sin(el)];
+  const f = norm([-eye[0], -eye[1], -eye[2] + 40]);
+  const r = norm(cross(f, [0, 0, 1]));
+  const u = cross(r, f);
+  return { eye, f, r, u };
+}
+function norm(v) { const l = Math.hypot(v[0], v[1], v[2]) || 1; return [v[0] / l, v[1] / l, v[2] / l]; }
+function cross(a, b) { return [a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0]]; }
+function dot(a, b) { return a[0] * b[0] + a[1] * b[1] + a[2] * b[2]; }
+let B = camBasis();
+function proj(p) {                                   // world (x east, y north, z up) -> screen
+  const d = [p[0] - B.eye[0], p[1] - B.eye[1], p[2] - B.eye[2]];
+  const z = dot(d, B.f); if (z < 10) return null;
+  const s = (H * 1.15) / z;
+  return [W / 2 + dot(d, B.r) * s, H * 0.56 - dot(d, B.u) * s, z, s];
+}
+
+// ---------------------------------------------------------------- interaction
+let drag = null, moved = false;
+cv.addEventListener("pointerdown", (e) => { drag = { x: e.clientX, y: e.clientY, az: cam.az, el: cam.el }; moved = false; cv.classList.add("drag"); cv.setPointerCapture(e.pointerId); });
+cv.addEventListener("pointermove", (e) => {
+  if (!drag) { hover(e); return; }
+  const dx = e.clientX - drag.x, dy = e.clientY - drag.y;
+  if (Math.abs(dx) + Math.abs(dy) > 3) moved = true;
+  cam.az = drag.az + dx * 0.35; cam.el = Math.max(6, Math.min(80, drag.el + dy * 0.25));
+});
+cv.addEventListener("pointerup", (e) => { cv.classList.remove("drag"); if (!moved) pick(e); drag = null; });
+cv.addEventListener("wheel", (e) => { e.preventDefault(); cam.dist = Math.max(500, Math.min(4200, cam.dist * (1 + Math.sign(e.deltaY) * 0.1))); }, { passive: false });
+cv.addEventListener("dblclick", () => { cam = Object.assign({}, cam0); });
+let hoverId = null, hubs = [];
+function locate(e) {
+  const r = cv.getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top;
+  let best = null, bd = 1e9;
+  for (const h of hubs) { const d = Math.hypot(x - h.x, y - (h.y + h.towerPx * 0.4)); if (d < bd && d < Math.max(40, h.towerPx * 0.7)) { bd = d; best = h; } }
+  return best;
+}
+function hover(e) { const h = locate(e); hoverId = h ? h.id : null; cv.style.cursor = h ? "pointer" : "grab"; }
+function pick(e) { const h = locate(e); if (h) send("streamlit:setComponentValue", { value: { selected: h.id, t: Date.now() }, dataType: "json" }); }
+
+// ---------------------------------------------------------------- scene
+const COL = { normal: "#16A34A", warning: "#F59E0B", fault: "#E5484D", tripped: "#7F1D1D" };
+const TOWER = 170, BLADE = 100;          // drawn ~2x real scale so the turbines are readable
+let angle = {}, last = performance.now(), particles = [];
+for (let i = 0; i < 70; i++) particles.push([Math.random() * 1600 - 800, Math.random() * 1000 - 500, 5 + Math.random() * 40, Math.random()]);
+
+function poly(pts, fill, stroke, lw) {
+  const P = pts.map(proj); if (P.some((p) => !p)) return;
+  ctx.beginPath(); ctx.moveTo(P[0][0], P[0][1]); for (let i = 1; i < P.length; i++) ctx.lineTo(P[i][0], P[i][1]); ctx.closePath();
+  if (fill) { ctx.fillStyle = fill; ctx.fill(); } if (stroke) { ctx.strokeStyle = stroke; ctx.lineWidth = lw || 1; ctx.stroke(); }
+}
+
+function drawGround() {
+  ctx.strokeStyle = "rgba(60,110,60,0.18)"; ctx.lineWidth = 1;
+  for (let g = -1000; g <= 1000; g += 100) {
+    let a = proj([g, -700, 0]), b = proj([g, 700, 0]); if (a && b) { ctx.beginPath(); ctx.moveTo(a[0], a[1]); ctx.lineTo(b[0], b[1]); ctx.stroke(); }
+    a = proj([-1000, g * 0.7, 0]); b = proj([1000, g * 0.7, 0]); if (a && b) { ctx.beginPath(); ctx.moveTo(a[0], a[1]); ctx.lineTo(b[0], b[1]); ctx.stroke(); }
+  }
+}
+
+function drawWindParticles(dt) {
+  // meteorological direction: wind comes FROM wind_dir -> moves towards wind_dir + 180
+  const to = rad((ARGS.wind_dir || 0) + 180), sp = Math.max(0.5, ARGS.wind_speed || 5) * 14;
+  const vx = Math.sin(to) * sp, vy = Math.cos(to) * sp;
+  ctx.strokeStyle = "rgba(255,255,255,0.75)"; ctx.lineWidth = 1.4;
+  for (const p of particles) {
+    p[0] += vx * dt; p[1] += vy * dt;
+    if (p[0] > 900) p[0] -= 1800; if (p[0] < -900) p[0] += 1800; if (p[1] > 560) p[1] -= 1120; if (p[1] < -560) p[1] += 1120;
+    const a = proj([p[0], p[1], 90 + 3 * p[2]]), b = proj([p[0] - vx * 0.35, p[1] - vy * 0.35, 90 + 3 * p[2]]);
+    if (a && b) { ctx.beginPath(); ctx.moveTo(a[0], a[1]); ctx.lineTo(b[0], b[1]); ctx.stroke(); }
+  }
+}
+
+function drawTurbine(t, dt) {
+  const x = t.x, y = t.y, st = t.tripped ? "tripped" : (t.status || "normal"), col = COL[st] || COL.normal;
+  const yaw = rad(t.yaw || 0);                     // rotor faces the direction the wind comes from
+  const fx = Math.sin(yaw), fy = Math.cos(yaw);    // unit vector towards the wind
+  const sx = -fy, sy = fx;                         // sideways (in rotor plane)
+  const base = proj([x, y, 0]), top = proj([x, y, TOWER]); if (!base || !top) return;
+  // status ring on the ground
+  ctx.beginPath(); ctx.ellipse(base[0], base[1], 60 * base[3], 22 * base[3], 0, 0, 2 * Math.PI);
+  ctx.fillStyle = col + "55"; ctx.fill(); ctx.lineWidth = (t.selected ? 3 : 1.5); ctx.strokeStyle = t.selected ? "#0B3B5C" : col; ctx.stroke();
+  if (t.selected || hoverId === t.id) {
+    ctx.beginPath(); ctx.ellipse(base[0], base[1], 78 * base[3], 29 * base[3], 0, 0, 2 * Math.PI);
+    ctx.strokeStyle = "rgba(11,59,92,0.5)"; ctx.setLineDash([5, 4]); ctx.lineWidth = 1.5; ctx.stroke(); ctx.setLineDash([]);
+  }
+  // tower (tapered)
+  const w0 = 6.5, w1 = 3.6;
+  poly([[x - w0 * sx, y - w0 * sy, 0], [x + w0 * sx, y + w0 * sy, 0], [x + w1 * sx, y + w1 * sy, TOWER], [x - w1 * sx, y - w1 * sy, TOWER]], "#F4F7FA", "#B8C4CF", 1);
+  // nacelle box (long axis along the wind direction)
+  const L = 30, Wn = 9, hz = TOWER, h2 = 10;
+  const c = (a, b, z) => [x + fx * a + sx * b, y + fy * a + sy * b, hz + z];
+  const back = [c(-L * 0.55, -Wn, -h2 / 2), c(-L * 0.55, Wn, -h2 / 2), c(-L * 0.55, Wn, h2), c(-L * 0.55, -Wn, h2)];
+  const front = [c(L * 0.45, -Wn, -h2 / 2), c(L * 0.45, Wn, -h2 / 2), c(L * 0.45, Wn, h2), c(L * 0.45, -Wn, h2)];
+  const faces = [[back[0], back[1], back[2], back[3]], [front[0], front[1], front[2], front[3]],
+                 [back[0], front[0], front[3], back[3]], [back[1], front[1], front[2], back[2]],
+                 [back[3], back[2], front[2], front[3]]];
+  faces.sort((A, Bf) => depth(Bf) - depth(A));
+  for (const f of faces) poly(f, "#FFFFFF", "#9FB0C0", 1);
+  // rotor
+  const hub = c(L * 0.6, 0, h2 * 0.2);
+  const rpm = t.tripped ? 0 : Math.max(0, t.rpm || 0);
+  angle[t.id] = ((angle[t.id] || Math.random() * 6.28) + rad(rpm * 6) * dt);      // rpm*360/60 deg per s
+  const blades = [];
+  for (let k = 0; k < 3; k++) {
+    const a = angle[t.id] + k * 2 * Math.PI / 3;
+    const ux = sx * Math.cos(a), uy = sy * Math.cos(a), uz = Math.sin(a);           // in the rotor plane
+    const tx = sx * Math.cos(a + 1.5708), ty = sy * Math.cos(a + 1.5708), tz = Math.sin(a + 1.5708);
+    const P = (r, wdt) => [hub[0] + ux * r + tx * wdt, hub[1] + uy * r + ty * wdt, hub[2] + uz * r + tz * wdt];
+    blades.push([P(4, 5.5), P(BLADE * 0.3, 7), P(BLADE, 1.2), P(BLADE, -0.8), P(4, -3.4)]);
+  }
+  const hubS = proj(hub);
+  const rotorInFront = dot([fx, fy, 0], [B.eye[0] - x, B.eye[1] - y, 0]) > 0;
+  const drawBlades = () => blades.forEach((b) => poly(b, t.selected ? "#FFFFFF" : "#F8FAFC", "#7D8EA0", 1));
+  if (!rotorInFront) drawBlades();
+  if (hubS) { ctx.beginPath(); ctx.arc(hubS[0], hubS[1], Math.max(3, 6.5 * hubS[3]), 0, 2 * Math.PI); ctx.fillStyle = "#E2E8F0"; ctx.fill(); ctx.strokeStyle = "#7D8EA0"; ctx.stroke(); }
+  if (rotorInFront) drawBlades();
+  // status lamp + label
+  const lamp = proj(c(-L * 0.3, 0, h2 + 2.5));
+  if (lamp) { ctx.beginPath(); ctx.arc(lamp[0], lamp[1], Math.max(3, 3 * lamp[3]), 0, 2 * Math.PI); ctx.fillStyle = col; ctx.fill(); }
+  const lab = proj([x, y, TOWER + BLADE + 26]);
+  if (lab) {
+    const txt = `T-${t.label ?? t.id}  ${Math.round(t.power_pct || 0)} %`;
+    ctx.font = `${t.selected ? 700 : 600} ${Math.max(11, Math.min(15, 12 * lab[3] + 4))}px Inter, Segoe UI, Arial`;
+    const tw = ctx.measureText(txt).width + 26;
+    ctx.fillStyle = t.selected ? "#0B3B5C" : "#ffffffe6";
+    roundRect(lab[0] - tw / 2, lab[1] - 11, tw, 22, 8); ctx.fill();
+    ctx.fillStyle = t.selected ? "#fff" : "#1F2D3D"; ctx.textAlign = "center"; ctx.textBaseline = "middle"; ctx.fillText(txt, lab[0] + 6, lab[1] + 0.5);
+    ctx.beginPath(); ctx.arc(lab[0] - tw / 2 + 10, lab[1], 4, 0, 6.29); ctx.fillStyle = col; ctx.fill();
+  }
+  hubs.push({ id: t.id, x: top[0], y: top[1], towerPx: Math.abs(base[1] - top[1]) });
+}
+function depth(face) { let s = 0; for (const p of face) s += dot([p[0] - B.eye[0], p[1] - B.eye[1], p[2] - B.eye[2]], B.f); return s / face.length; }
+function roundRect(x, y, w, h, r) { ctx.beginPath(); ctx.moveTo(x + r, y); ctx.arcTo(x + w, y, x + w, y + h, r); ctx.arcTo(x + w, y + h, x, y + h, r); ctx.arcTo(x, y + h, x, y, r); ctx.arcTo(x, y, x + w, y, r); ctx.closePath(); }
+
+function drawCompass() {
+  const cx = W - 62, cy = 62, R = 38;
+  ctx.beginPath(); ctx.arc(cx, cy, R + 8, 0, 6.29); ctx.fillStyle = "#ffffffd9"; ctx.fill();
+  ctx.strokeStyle = "#B8C4CF"; ctx.lineWidth = 1; ctx.beginPath(); ctx.arc(cx, cy, R, 0, 6.29); ctx.stroke();
+  // north as seen by the camera
+  const n = proj([0, 300, 0]), o = proj([0, 0, 0]);
+  const north = (n && o) ? Math.atan2(n[0] - o[0], -(n[1] - o[1])) : 0;
+  ctx.fillStyle = "#6B7C93"; ctx.font = "600 10px Inter, Arial"; ctx.textAlign = "center"; ctx.textBaseline = "middle";
+  ctx.fillText("N", cx + Math.sin(north) * (R - 9), cy - Math.cos(north) * (R - 9));
+  const to = north + rad((ARGS.wind_dir || 0) + 180);
+  ctx.strokeStyle = "#2F80ED"; ctx.fillStyle = "#2F80ED"; ctx.lineWidth = 3;
+  const x1 = cx - Math.sin(to) * (R - 12), y1 = cy + Math.cos(to) * (R - 12), x2 = cx + Math.sin(to) * (R - 12), y2 = cy - Math.cos(to) * (R - 12);
+  ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x2, y2); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(x2, y2); ctx.lineTo(x2 - Math.sin(to - 0.5) * 10, y2 + Math.cos(to - 0.5) * 10);
+  ctx.lineTo(x2 - Math.sin(to + 0.5) * 10, y2 + Math.cos(to + 0.5) * 10); ctx.closePath(); ctx.fill();
+  ctx.fillStyle = "#1F2D3D"; ctx.font = "700 11px Inter, Arial";
+  ctx.fillText(`${(ARGS.wind_speed || 0).toFixed(1)} m/s`, cx, cy + R + 18);
+  ctx.font = "500 10px Inter, Arial"; ctx.fillStyle = "#6B7C93"; ctx.fillText(`from ${Math.round(ARGS.wind_dir || 0)}°`, cx, cy + R + 31);
+}
+
+function frame(now) {
+  const dt = Math.min(0.1, (now - last) / 1000); last = now;
+  B = camBasis();
+  ctx.setTransform(DPR, 0, 0, DPR, 0, 0); ctx.clearRect(0, 0, W, H);
+  drawGround(); drawWindParticles(dt);
+  hubs = [];
+  const ts = (ARGS.turbines || []).slice().sort((a, b) => {
+    const da = dot([a.x - B.eye[0], a.y - B.eye[1], -B.eye[2]], B.f), db = dot([b.x - B.eye[0], b.y - B.eye[1], -B.eye[2]], B.f); return db - da; });
+  for (const t of ts) drawTurbine(t, dt);
+  drawCompass();
+  document.getElementById("info").textContent = ARGS.title || "Wind farm";
+  requestAnimationFrame(frame);
+}
+resize(); requestAnimationFrame(frame);
+</script>
+</body>
+</html>

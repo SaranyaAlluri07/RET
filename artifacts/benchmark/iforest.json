@@ -1,0 +1,794 @@
+{
+ "method": "iforest",
+ "name": "Isolation Forest on Avg signals",
+ "per_dataset": [
+  {
+   "id": 0,
+   "asset": 0,
+   "label": "anomaly",
+   "description": "Generator bearing failure",
+   "detected": false,
+   "first_alarm": null,
+   "delay_h": null,
+   "lead_to_end_h": null,
+   "false_alarms": 0,
+   "pre_event_alarms": 0,
+   "diagnosis": "Unknown \u2014 insufficient evidence",
+   "diagnosis_correct": false,
+   "params": {
+    "q": 0.98
+   },
+   "diagnosis_detail": null,
+   "care_parts": {
+    "f_beta": 0.2755,
+    "accuracy": null,
+    "weighted_score": 0.0824,
+    "max_criticality": 43,
+    "detected_care": false,
+    "tp": 149,
+    "fp": 24,
+    "fn": 1863,
+    "tn": 802
+   }
+  },
+  {
+   "id": 3,
+   "asset": 10,
+   "label": "normal",
+   "description": "",
+   "detected": false,
+   "first_alarm": null,
+   "delay_h": null,
+   "lead_to_end_h": null,
+   "false_alarms": 0,
+   "pre_event_alarms": 0,
+   "diagnosis": "Unknown \u2014 insufficient evidence",
+   "diagnosis_correct": null,
+   "params": {
+    "q": 0.9
+   },
+   "diagnosis_detail": null,
+   "care_parts": {
+    "f_beta": null,
+    "accuracy": 0.9497,
+    "weighted_score": null,
+    "max_criticality": 56,
+    "detected_care": false,
+    "tp": 0,
+    "fp": 166,
+    "fn": 0,
+    "tn": 3136
+   }
+  },
+  {
+   "id": 10,
+   "asset": 10,
+   "label": "anomaly",
+   "description": "Gearbox failure",
+   "detected": false,
+   "first_alarm": null,
+   "delay_h": null,
+   "lead_to_end_h": null,
+   "false_alarms": 0,
+   "pre_event_alarms": 0,
+   "diagnosis": "Unknown \u2014 insufficient evidence",
+   "diagnosis_correct": false,
+   "params": {
+    "q": 0.9
+   },
+   "diagnosis_detail": null,
+   "care_parts": {
+    "f_beta": 0.2357,
+    "accuracy": null,
+    "weighted_score": 0.0548,
+    "max_criticality": 38,
+    "detected_care": false,
+    "tp": 57,
+    "fp": 0,
+    "fn": 924,
+    "tn": 288
+   }
+  },
+  {
+   "id": 13,
+   "asset": 21,
+   "label": "normal",
+   "description": "",
+   "detected": false,
+   "first_alarm": null,
+   "delay_h": null,
+   "lead_to_end_h": null,
+   "false_alarms": 1,
+   "pre_event_alarms": 0,
+   "diagnosis": "Unknown \u2014 insufficient evidence",
+   "diagnosis_correct": null,
+   "params": {
+    "q": 0.9
+   },
+   "diagnosis_detail": null,
+   "care_parts": {
+    "f_beta": null,
+    "accuracy": 0.8468,
+    "weighted_score": null,
+    "max_criticality": 158,
+    "detected_care": true,
+    "tp": 0,
+    "fp": 549,
+    "fn": 0,
+    "tn": 3034
+   }
+  },
+  {
+   "id": 14,
+   "asset": 13,
+   "label": "normal",
+   "description": "",
+   "detected": false,
+   "first_alarm": null,
+   "delay_h": null,
+   "lead_to_end_h": null,
+   "false_alarms": 0,
+   "pre_event_alarms": 0,
+   "diagnosis": "Unknown \u2014 insufficient evidence",
+   "diagnosis_correct": null,
+   "params": {
+    "q": 0.9
+   },
+   "diagnosis_detail": null,
+   "care_parts": {
+    "f_beta": null,
+    "accuracy": 0.8958,
+    "weighted_score": null,
+    "max_criticality": 34,
+    "detected_care": false,
+    "tp": 0,
+    "fp": 198,
+    "fn": 0,
+    "tn": 1703
+   }
+  },
+  {
+   "id": 17,
+   "asset": 10,
+   "label": "normal",
+   "description": "",
+   "detected": false,
+   "first_alarm": null,
+   "delay_h": null,
+   "lead_to_end_h": null,
+   "false_alarms": 0,
+   "pre_event_alarms": 0,
+   "diagnosis": "Unknown \u2014 insufficient evidence",
+   "diagnosis_correct": null,
+   "params": {
+    "q": 0.9
+   },
+   "diagnosis_detail": null,
+   "care_parts": {
+    "f_beta": null,
+    "accuracy": 1.0,
+    "weighted_score": null,
+    "max_criticality": 0,
+    "detected_care": false,
+    "tp": 0,
+    "fp": 0,
+    "fn": 0,
+    "tn": 2781
+   }
+  },
+  {
+   "id": 22,
+   "asset": 21,
+   "label": "anomaly",
+   "description": "Hydraulic group",
+   "detected": false,
+   "first_alarm": null,
+   "delay_h": null,
+   "lead_to_end_h": null,
+   "false_alarms": 0,
+   "pre_event_alarms": 0,
+   "diagnosis": "Unknown \u2014 insufficient evidence",
+   "diagnosis_correct": false,
+   "params": {
+    "q": 0.9
+   },
+   "diagnosis_detail": null,
+   "care_parts": {
+    "f_beta": 0.5243,
+    "accuracy": null,
+    "weighted_score": 0.2723,
+    "max_criticality": 60,
+    "detected_care": false,
+    "tp": 188,
+    "fp": 9,
+    "fn": 817,
+    "tn": 134
+   }
+  },
+  {
+   "id": 24,
+   "asset": 0,
+   "label": "normal",
+   "description": "",
+   "detected": false,
+   "first_alarm": null,
+   "delay_h": null,
+   "lead_to_end_h": null,
+   "false_alarms": 0,
+   "pre_event_alarms": 0,
+   "diagnosis": "Unknown \u2014 insufficient evidence",
+   "diagnosis_correct": null,
+   "params": {
+    "q": 0.98
+   },
+   "diagnosis_detail": null,
+   "care_parts": {
+    "f_beta": null,
+    "accuracy": 0.9971,
+    "weighted_score": null,
+    "max_criticality": 2,
+    "detected_care": false,
+    "tp": 0,
+    "fp": 8,
+    "fn": 0,
+    "tn": 2706
+   }
+  },
+  {
+   "id": 25,
+   "asset": 11,
+   "label": "normal",
+   "description": "",
+   "detected": false,
+   "first_alarm": null,
+   "delay_h": null,
+   "lead_to_end_h": null,
+   "false_alarms": 0,
+   "pre_event_alarms": 0,
+   "diagnosis": "Unknown \u2014 insufficient evidence",
+   "diagnosis_correct": null,
+   "params": {
+    "q": 0.9
+   },
+   "diagnosis_detail": null,
+   "care_parts": {
+    "f_beta": null,
+    "accuracy": 0.9241,
+    "weighted_score": null,
+    "max_criticality": 52,
+    "detected_care": false,
+    "tp": 0,
+    "fp": 184,
+    "fn": 0,
+    "tn": 2239
+   }
+  },
+  {
+   "id": 26,
+   "asset": 0,
+   "label": "anomaly",
+   "description": "Hydraulic group",
+   "detected": false,
+   "first_alarm": null,
+   "delay_h": null,
+   "lead_to_end_h": null,
+   "false_alarms": 0,
+   "pre_event_alarms": 0,
+   "diagnosis": "Unknown \u2014 insufficient evidence",
+   "diagnosis_correct": false,
+   "params": {
+    "q": 0.98
+   },
+   "diagnosis_detail": null,
+   "care_parts": {
+    "f_beta": 0.0,
+    "accuracy": null,
+    "weighted_score": 0.0,
+    "max_criticality": 0,
+    "detected_care": false,
+    "tp": 0,
+    "fp": 0,
+    "fn": 1009,
+    "tn": 432
+   }
+  },
+  {
+   "id": 38,
+   "asset": 13,
+   "label": "normal",
+   "description": "",
+   "detected": false,
+   "first_alarm": null,
+   "delay_h": null,
+   "lead_to_end_h": null,
+   "false_alarms": 0,
+   "pre_event_alarms": 0,
+   "diagnosis": "Unknown \u2014 insufficient evidence",
+   "diagnosis_correct": null,
+   "params": {
+    "q": 0.9
+   },
+   "diagnosis_detail": null,
+   "care_parts": {
+    "f_beta": null,
+    "accuracy": 0.8561,
+    "weighted_score": null,
+    "max_criticality": 67,
+    "detected_care": false,
+    "tp": 0,
+    "fp": 366,
+    "fn": 0,
+    "tn": 2178
+   }
+  },
+  {
+   "id": 40,
+   "asset": 10,
+   "label": "anomaly",
+   "description": "Generator bearing failure",
+   "detected": true,
+   "first_alarm": "2023-01-08T10:10:00",
+   "delay_h": 322.2,
+   "lead_to_end_h": 434.8,
+   "false_alarms": 0,
+   "pre_event_alarms": 0,
+   "diagnosis": "Unknown \u2014 insufficient evidence",
+   "diagnosis_correct": false,
+   "params": {
+    "q": 0.9
+   },
+   "diagnosis_detail": null,
+   "care_parts": {
+    "f_beta": 0.6954,
+    "accuracy": null,
+    "weighted_score": 0.2354,
+    "max_criticality": 1000,
+    "detected_care": true,
+    "tp": 1822,
+    "fp": 326,
+    "fn": 2686,
+    "tn": 105
+   }
+  },
+  {
+   "id": 42,
+   "asset": 10,
+   "label": "anomaly",
+   "description": "Hydraulic group",
+   "detected": false,
+   "first_alarm": null,
+   "delay_h": null,
+   "lead_to_end_h": null,
+   "false_alarms": 0,
+   "pre_event_alarms": 0,
+   "diagnosis": "Unknown \u2014 insufficient evidence",
+   "diagnosis_correct": false,
+   "params": {
+    "q": 0.9
+   },
+   "diagnosis_detail": null,
+   "care_parts": {
+    "f_beta": 0.284,
+    "accuracy": null,
+    "weighted_score": 0.0729,
+    "max_criticality": 50,
+    "detected_care": false,
+    "tp": 74,
+    "fp": 0,
+    "fn": 933,
+    "tn": 576
+   }
+  },
+  {
+   "id": 45,
+   "asset": 13,
+   "label": "anomaly",
+   "description": "Hydraulic group",
+   "detected": true,
+   "first_alarm": "2023-04-19T23:40:00",
+   "delay_h": 5.5,
+   "lead_to_end_h": 162.5,
+   "false_alarms": 0,
+   "pre_event_alarms": 0,
+   "diagnosis": "Unknown \u2014 insufficient evidence",
+   "diagnosis_correct": false,
+   "params": {
+    "q": 0.9
+   },
+   "diagnosis_detail": null,
+   "care_parts": {
+    "f_beta": 0.6968,
+    "accuracy": null,
+    "weighted_score": 0.5426,
+    "max_criticality": 318,
+    "detected_care": true,
+    "tp": 369,
+    "fp": 41,
+    "fn": 639,
+    "tn": 391
+   }
+  },
+  {
+   "id": 51,
+   "asset": 21,
+   "label": "anomaly",
+   "description": "Gearbox bearings damaged",
+   "detected": false,
+   "first_alarm": null,
+   "delay_h": null,
+   "lead_to_end_h": null,
+   "false_alarms": 0,
+   "pre_event_alarms": 0,
+   "diagnosis": "Unknown \u2014 insufficient evidence",
+   "diagnosis_correct": false,
+   "params": {
+    "q": 0.9
+   },
+   "diagnosis_detail": null,
+   "care_parts": {
+    "f_beta": 0.1045,
+    "accuracy": null,
+    "weighted_score": 0.011,
+    "max_criticality": 30,
+    "detected_care": false,
+    "tp": 43,
+    "fp": 53,
+    "fn": 1630,
+    "tn": 667
+   }
+  },
+  {
+   "id": 68,
+   "asset": 11,
+   "label": "anomaly",
+   "description": "Transformer failure",
+   "detected": false,
+   "first_alarm": null,
+   "delay_h": null,
+   "lead_to_end_h": null,
+   "false_alarms": 0,
+   "pre_event_alarms": 0,
+   "diagnosis": "Unknown \u2014 insufficient evidence",
+   "diagnosis_correct": false,
+   "params": {
+    "q": 0.9
+   },
+   "diagnosis_detail": null,
+   "care_parts": {
+    "f_beta": 0.1675,
+    "accuracy": null,
+    "weighted_score": 0.0358,
+    "max_criticality": 27,
+    "detected_care": false,
+    "tp": 98,
+    "fp": 130,
+    "fn": 1916,
+    "tn": 151
+   }
+  },
+  {
+   "id": 69,
+   "asset": 11,
+   "label": "normal",
+   "description": "",
+   "detected": false,
+   "first_alarm": null,
+   "delay_h": null,
+   "lead_to_end_h": null,
+   "false_alarms": 0,
+   "pre_event_alarms": 0,
+   "diagnosis": "Unknown \u2014 insufficient evidence",
+   "diagnosis_correct": null,
+   "params": {
+    "q": 0.9
+   },
+   "diagnosis_detail": null,
+   "care_parts": {
+    "f_beta": null,
+    "accuracy": 0.9784,
+    "weighted_score": null,
+    "max_criticality": 41,
+    "detected_care": false,
+    "tp": 0,
+    "fp": 56,
+    "fn": 0,
+    "tn": 2537
+   }
+  },
+  {
+   "id": 71,
+   "asset": 0,
+   "label": "normal",
+   "description": "",
+   "detected": false,
+   "first_alarm": null,
+   "delay_h": null,
+   "lead_to_end_h": null,
+   "false_alarms": 0,
+   "pre_event_alarms": 0,
+   "diagnosis": "Unknown \u2014 insufficient evidence",
+   "diagnosis_correct": null,
+   "params": {
+    "q": 0.98
+   },
+   "diagnosis_detail": null,
+   "care_parts": {
+    "f_beta": null,
+    "accuracy": 0.9857,
+    "weighted_score": null,
+    "max_criticality": 5,
+    "detected_care": false,
+    "tp": 0,
+    "fp": 35,
+    "fn": 0,
+    "tn": 2414
+   }
+  },
+  {
+   "id": 72,
+   "asset": 21,
+   "label": "anomaly",
+   "description": "Gearbox failure",
+   "detected": false,
+   "first_alarm": null,
+   "delay_h": null,
+   "lead_to_end_h": null,
+   "false_alarms": 0,
+   "pre_event_alarms": 0,
+   "diagnosis": "Unknown \u2014 insufficient evidence",
+   "diagnosis_correct": false,
+   "params": {
+    "q": 0.9
+   },
+   "diagnosis_detail": null,
+   "care_parts": {
+    "f_beta": 0.1514,
+    "accuracy": null,
+    "weighted_score": 0.026,
+    "max_criticality": 22,
+    "detected_care": false,
+    "tp": 36,
+    "fp": 9,
+    "fn": 973,
+    "tn": 999
+   }
+  },
+  {
+   "id": 73,
+   "asset": 0,
+   "label": "anomaly",
+   "description": "Hydraulic group",
+   "detected": false,
+   "first_alarm": null,
+   "delay_h": null,
+   "lead_to_end_h": null,
+   "false_alarms": 0,
+   "pre_event_alarms": 0,
+   "diagnosis": "Unknown \u2014 insufficient evidence",
+   "diagnosis_correct": false,
+   "params": {
+    "q": 0.98
+   },
+   "diagnosis_detail": null,
+   "care_parts": {
+    "f_beta": 0.3481,
+    "accuracy": null,
+    "weighted_score": 0.1874,
+    "max_criticality": 59,
+    "detected_care": false,
+    "tp": 178,
+    "fp": 209,
+    "fn": 831,
+    "tn": 511
+   }
+  },
+  {
+   "id": 84,
+   "asset": 13,
+   "label": "anomaly",
+   "description": "Hydraulic group",
+   "detected": false,
+   "first_alarm": null,
+   "delay_h": null,
+   "lead_to_end_h": null,
+   "false_alarms": 0,
+   "pre_event_alarms": 0,
+   "diagnosis": "Unknown \u2014 insufficient evidence",
+   "diagnosis_correct": false,
+   "params": {
+    "q": 0.9
+   },
+   "diagnosis_detail": null,
+   "care_parts": {
+    "f_beta": 0.062,
+    "accuracy": null,
+    "weighted_score": 0.0005,
+    "max_criticality": 10,
+    "detected_care": false,
+    "tp": 14,
+    "fp": 17,
+    "fn": 991,
+    "tn": 415
+   }
+  },
+  {
+   "id": 92,
+   "asset": 11,
+   "label": "normal",
+   "description": "",
+   "detected": false,
+   "first_alarm": null,
+   "delay_h": null,
+   "lead_to_end_h": null,
+   "false_alarms": 1,
+   "pre_event_alarms": 0,
+   "diagnosis": "Unknown \u2014 insufficient evidence",
+   "diagnosis_correct": null,
+   "params": {
+    "q": 0.9
+   },
+   "diagnosis_detail": null,
+   "care_parts": {
+    "f_beta": null,
+    "accuracy": 0.6759,
+    "weighted_score": null,
+    "max_criticality": 421,
+    "detected_care": true,
+    "tp": 0,
+    "fp": 575,
+    "fn": 0,
+    "tn": 1199
+   }
+  }
+ ],
+ "confusion": {
+  "labels": [
+   "Gearbox",
+   "Generator bearings",
+   "Transformer",
+   "Hydraulic group",
+   "normal",
+   "Unknown",
+   "missed"
+  ],
+  "matrix": [
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    3
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    1,
+    1
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    1
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    1,
+    5
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    8,
+    2,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ]
+  ],
+  "note": "rows = logged fault class, columns = diagnosis at first alarm; 'missed' = no alarm in the event window; for normal datasets 'normal' = no false alarm, otherwise the false alarm's diagnosis"
+ },
+ "component_metrics": {
+  "Gearbox": {
+   "events": 3,
+   "correct": 0,
+   "predicted": 0,
+   "recall": 0.0,
+   "precision": null
+  },
+  "Generator bearings": {
+   "events": 2,
+   "correct": 0,
+   "predicted": 0,
+   "recall": 0.0,
+   "precision": null
+  },
+  "Hydraulic group": {
+   "events": 6,
+   "correct": 0,
+   "predicted": 0,
+   "recall": 0.0,
+   "precision": null
+  },
+  "Transformer": {
+   "events": 1,
+   "correct": 0,
+   "predicted": 0,
+   "recall": 0.0,
+   "precision": null
+  }
+ },
+ "fold_params": {
+  "0": {
+   "q": 0.98
+  },
+  "10": {
+   "q": 0.9
+  },
+  "11": {
+   "q": 0.9
+  },
+  "13": {
+   "q": 0.9
+  },
+  "21": {
+   "q": 0.9
+  }
+ },
+ "summary": {
+  "id": "iforest",
+  "name": "Isolation Forest on Avg signals",
+  "kind": "baseline",
+  "care": 0.5202,
+  "coverage": 0.2954,
+  "accuracy": 0.911,
+  "reliability": 0.3571,
+  "earliness": 0.1268,
+  "events_detected": 2,
+  "events_total": 12,
+  "false_alarm_events": 2,
+  "normal_datasets": 10,
+  "fa_per_turbine_month": 0.336,
+  "normal_datasets_flagged": 2,
+  "pre_event_alarms": 0,
+  "delay_median_h": 163.8,
+  "delay_p90_h": 290.5,
+  "component_correct": 0,
+  "component_unknown": 2,
+  "care_events_detected": 2,
+  "care_normal_flagged": 2,
+  "normal_months": 5.95,
+  "diagnosed": 2,
+  "notes": "threshold quantile chosen leave-one-turbine-out; alarm = CARE criticality >= 72; no diagnosis"
+ }
+}

@@ -1,0 +1,140 @@
+<?xml version="1.0"?>
+<flowgorithm fileversion="3.0">
+    <attributes>
+        <attribute name="name" value="AlarmStateMachine"/>
+        <attribute name="authors" value="WindTwin project"/>
+        <attribute name="about" value="Per-step alarm logic of windtwin/alarms.py (_Machine.step), selected parameters L=2, h=3, persistence 36 steps (6 h), cooldown 144 steps (24 h). Inputs per 10-min step: bad (data quality bad), judged (any target judged), E and S (turbine-level scaled EWMA evidence and CUSUM)."/>
+        <attribute name="saved" value="2026-10-26 04:00:00 PM"/>
+    </attributes>
+    <function name="Main" type="None" variable="">
+        <parameters/>
+        <body>
+            <declare name="L, H, CLEARF, WATCHF" type="Real" array="False" size=""/>
+            <declare name="PERSIST, COOLDOWN, FAULTMULT, nSteps, step, level, run, calm" type="Integer" array="False" size=""/>
+            <declare name="E, S" type="Real" array="False" size=""/>
+            <declare name="bad, judged, hit, near, both, below" type="Boolean" array="False" size=""/>
+            <declare name="state" type="String" array="False" size=""/>
+            <assign variable="L" expression="2"/>
+            <assign variable="H" expression="3"/>
+            <assign variable="CLEARF" expression="0.5"/>
+            <assign variable="WATCHF" expression="0.7"/>
+            <assign variable="PERSIST" expression="36"/>
+            <assign variable="COOLDOWN" expression="144"/>
+            <assign variable="FAULTMULT" expression="4"/>
+            <assign variable="level" expression="0"/>
+            <assign variable="run" expression="0"/>
+            <assign variable="calm" expression="0"/>
+            <output expression="&quot;Number of 10-min steps to process?&quot;" newline="True"/>
+            <input variable="nSteps"/>
+            <for variable="step" start="1" end="nSteps" direction="inc" step="1">
+                <input variable="bad"/>
+                <input variable="judged"/>
+                <input variable="E"/>
+                <input variable="S"/>
+                <if expression="bad">
+                    <then>
+                        <assign variable="state" expression="&quot;unknown&quot;"/>
+                    </then>
+                    <else>
+                        <if expression="not judged">
+                            <then>
+                                <if expression="level &gt;= 2">
+                                    <then>
+                                        <assign variable="state" expression="&quot;case open (frozen)&quot;"/>
+                                    </then>
+                                    <else>
+                                        <assign variable="state" expression="&quot;offline&quot;"/>
+                                    </else>
+                                </if>
+                            </then>
+                            <else>
+                                <assign variable="hit" expression="E &gt; L or S &gt; H"/>
+                                <assign variable="near" expression="E &gt; WATCHF * L or S &gt; WATCHF * H"/>
+                                <if expression="hit">
+                                    <then>
+                                        <assign variable="run" expression="run + 1"/>
+                                    </then>
+                                    <else>
+                                        <assign variable="run" expression="0"/>
+                                    </else>
+                                </if>
+                                <if expression="level &lt; 2">
+                                    <then>
+                                        <if expression="run &gt;= PERSIST">
+                                            <then>
+                                                <assign variable="level" expression="2"/>
+                                                <assign variable="calm" expression="0"/>
+                                                <output expression="&quot;Step &quot; &amp; step &amp; &quot;: warning, open case and run diagnosis&quot;" newline="True"/>
+                                            </then>
+                                            <else>
+                                                <if expression="hit or near">
+                                                    <then>
+                                                        <assign variable="level" expression="1"/>
+                                                    </then>
+                                                    <else>
+                                                        <assign variable="level" expression="0"/>
+                                                    </else>
+                                                </if>
+                                            </else>
+                                        </if>
+                                    </then>
+                                    <else>
+                                        <assign variable="both" expression="E &gt; L and S &gt; H"/>
+                                        <if expression="level = 2 and run &gt;= FAULTMULT * PERSIST and both">
+                                            <then>
+                                                <assign variable="level" expression="3"/>
+                                                <output expression="&quot;Step &quot; &amp; step &amp; &quot;: escalated to fault&quot;" newline="True"/>
+                                            </then>
+                                            <else/>
+                                        </if>
+                                        <assign variable="below" expression="E &lt; CLEARF * L and S &lt; CLEARF * H"/>
+                                        <if expression="below">
+                                            <then>
+                                                <assign variable="calm" expression="calm + 1"/>
+                                            </then>
+                                            <else>
+                                                <assign variable="calm" expression="0"/>
+                                            </else>
+                                        </if>
+                                        <if expression="calm &gt;= COOLDOWN">
+                                            <then>
+                                                <assign variable="level" expression="0"/>
+                                                <assign variable="run" expression="0"/>
+                                                <assign variable="calm" expression="0"/>
+                                                <output expression="&quot;Step &quot; &amp; step &amp; &quot;: case closed&quot;" newline="True"/>
+                                            </then>
+                                            <else/>
+                                        </if>
+                                    </else>
+                                </if>
+                                <if expression="level = 0">
+                                    <then>
+                                        <assign variable="state" expression="&quot;normal&quot;"/>
+                                    </then>
+                                    <else>
+                                        <if expression="level = 1">
+                                            <then>
+                                                <assign variable="state" expression="&quot;watch&quot;"/>
+                                            </then>
+                                            <else>
+                                                <if expression="level = 2">
+                                                    <then>
+                                                        <assign variable="state" expression="&quot;warning&quot;"/>
+                                                    </then>
+                                                    <else>
+                                                        <assign variable="state" expression="&quot;fault&quot;"/>
+                                                    </else>
+                                                </if>
+                                            </else>
+                                        </if>
+                                    </else>
+                                </if>
+                            </else>
+                        </if>
+                    </else>
+                </if>
+                <output expression="&quot;Step &quot; &amp; step &amp; &quot; state: &quot; &amp; state" newline="True"/>
+            </for>
+        </body>
+    </function>
+</flowgorithm>

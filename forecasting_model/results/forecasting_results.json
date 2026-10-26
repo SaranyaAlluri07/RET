@@ -1,0 +1,120 @@
+{
+  "test_rows": 26064,
+  "test_set": "all healthy prediction-period rows (raw data not found, overlap filter not applied)",
+  "rated_power_estimate": 0.975609756097561,
+  "official_power_model_metrics": {
+    "ml_gradient_boosting": {
+      "RMSE": 0.017789439091454456,
+      "MAE": 0.011172234905312519,
+      "R2": 0.9945632016857756,
+      "nRMSE_%": 1.8234175068740817,
+      "nMAE_%": 1.1451540777945333,
+      "n": 7815
+    },
+    "physics_power_curve": {
+      "RMSE": 0.02067012327795802,
+      "MAE": 0.012590464969608573,
+      "R2": 0.9926598514967094,
+      "nRMSE_%": 2.1186876359906974,
+      "nMAE_%": 1.2905226593848786,
+      "n": 7815
+    }
+  },
+  "ml_gradient_boosting": {
+    "MAE_%rated": 1.3183867524137474,
+    "RMSE_%rated": 2.6527437885352843,
+    "R2": 0.9939395784790527,
+    "MAPE_%": 4.776498750298827,
+    "MAPE_rows": 14943,
+    "n": 26064
+  },
+  "physics_power_curve": {
+    "MAE_%rated": 1.50812457611632,
+    "RMSE_%rated": 2.913999065783876,
+    "R2": 0.9926870764121117,
+    "MAPE_%": 5.607686691590919,
+    "MAPE_rows": 14943,
+    "n": 26064
+  },
+  "per_turbine": {
+    "0": {
+      "MAE_%rated": 1.237714303779142,
+      "RMSE_%rated": 1.905546524084999,
+      "R2": 0.9961377545928352,
+      "MAPE_%": 4.642425190766426,
+      "MAPE_rows": 2800,
+      "n": 5163
+    },
+    "10": {
+      "MAE_%rated": 1.4559648081819996,
+      "RMSE_%rated": 2.84984786721769,
+      "R2": 0.9906410986995876,
+      "MAPE_%": 5.913828095290722,
+      "MAPE_rows": 3147,
+      "n": 6083
+    },
+    "11": {
+      "MAE_%rated": 1.1113339067317693,
+      "RMSE_%rated": 3.4571726886435203,
+      "R2": 0.9907749918222428,
+      "MAPE_%": 4.199040878661475,
+      "MAPE_rows": 3743,
+      "n": 6790
+    },
+    "13": {
+      "MAE_%rated": 1.3468644541374162,
+      "RMSE_%rated": 1.908943131928279,
+      "R2": 0.9968795548741929,
+      "MAPE_%": 4.590020523395596,
+      "MAPE_rows": 2763,
+      "n": 4445
+    },
+    "21": {
+      "MAE_%rated": 1.558110441244646,
+      "RMSE_%rated": 2.235763658315545,
+      "R2": 0.9966228869724465,
+      "MAPE_%": 4.56480986374198,
+      "MAPE_rows": 2490,
+      "n": 3583
+    }
+  },
+  "feature_importance": {
+    "wind": 0.0018093781742094972,
+    "wind2": 0.0,
+    "wind3": 0.0,
+    "wind_norm": 1.9188927086221501,
+    "wind_std_1h": 5.408590776088129e-05,
+    "wind_change": 0.00021020466178427454,
+    "air_density": 0.0007371910778892099,
+    "hour_sin": 0.00019290678675738527,
+    "hour_cos": 0.00030397567513646974,
+    "doy_sin": 0.00048602679122145,
+    "doy_cos": 0.0008115024067025578,
+    "temp": 7.798197041763988e-05,
+    "dir_sin": 0.0005290091921597018,
+    "dir_cos": 0.00043315422416807526
+  },
+  "features": [
+    "wind",
+    "wind2",
+    "wind3",
+    "wind_norm",
+    "wind_std_1h",
+    "wind_change",
+    "air_density",
+    "hour_sin",
+    "hour_cos",
+    "doy_sin",
+    "doy_cos",
+    "temp",
+    "dir_sin",
+    "dir_cos"
+  ],
+  "train_test_note": "Trained on the training periods (normal operation); tested on the unseen prediction periods of the healthy datasets.",
+  "residual": {
+    "mean": 0.00011349374906776091,
+    "std": 0.025880674839208816,
+    "p05": -0.03215316085186562,
+    "p95": 0.028360133312553874
+  }
+}

@@ -1,0 +1,490 @@
+{
+ "metrics": {
+  "ml": {
+   "mae": 0.01314,
+   "rmse": 0.02016,
+   "r2": 0.99632,
+   "n": 26014
+  },
+  "physics": {
+   "mae": 0.01385,
+   "rmse": 0.02157,
+   "r2": 0.99579,
+   "n": 26014
+  },
+  "legacy_reported": {
+   "r2": 0.9946,
+   "rmse": 0.0182,
+   "mae": 0.0115,
+   "note": "from USER_MANUAL / legacy README"
+  }
+ },
+ "intervals": {
+  "nominal": [
+   0.8,
+   0.95
+  ],
+  "method": "split-conformal |residual| quantile per wind-speed regime",
+  "coverage_overall": {
+   "coverage_80": 0.8119,
+   "coverage_95": 0.9506
+  },
+  "coverage_by_regime": [
+   {
+    "regime": "0-4 m/s",
+    "wind_lo": 0.0,
+    "wind_hi": 4.0,
+    "nominal": 0.8,
+    "n": 7994,
+    "coverage": 0.8206,
+    "width": 0.0117
+   },
+   {
+    "regime": "0-4 m/s",
+    "wind_lo": 0.0,
+    "wind_hi": 4.0,
+    "nominal": 0.95,
+    "n": 7994,
+    "coverage": 0.949,
+    "width": 0.0235
+   },
+   {
+    "regime": "4-8 m/s",
+    "wind_lo": 4.0,
+    "wind_hi": 8.0,
+    "nominal": 0.8,
+    "n": 10305,
+    "coverage": 0.7943,
+    "width": 0.0419
+   },
+   {
+    "regime": "4-8 m/s",
+    "wind_lo": 4.0,
+    "wind_hi": 8.0,
+    "nominal": 0.95,
+    "n": 10305,
+    "coverage": 0.9486,
+    "width": 0.0779
+   },
+   {
+    "regime": "8-12 m/s",
+    "wind_lo": 8.0,
+    "wind_hi": 12.0,
+    "nominal": 0.8,
+    "n": 5623,
+    "coverage": 0.811,
+    "width": 0.0816
+   },
+   {
+    "regime": "8-12 m/s",
+    "wind_lo": 8.0,
+    "wind_hi": 12.0,
+    "nominal": 0.95,
+    "n": 5623,
+    "coverage": 0.9465,
+    "width": 0.1238
+   },
+   {
+    "regime": ">= 12 m/s",
+    "wind_lo": 12.0,
+    "wind_hi": null,
+    "nominal": 0.8,
+    "n": 2092,
+    "coverage": 0.8681,
+    "width": 0.0401
+   },
+   {
+    "regime": ">= 12 m/s",
+    "wind_lo": 12.0,
+    "wind_hi": null,
+    "nominal": 0.95,
+    "n": 2092,
+    "coverage": 0.9785,
+    "width": 0.0956
+   }
+  ],
+  "q": {
+   "0.8": [
+    0.0058,
+    0.021,
+    0.0408,
+    0.0201
+   ],
+   "0.95": [
+    0.0118,
+    0.0389,
+    0.0619,
+    0.0478
+   ]
+  }
+ },
+ "power_curve": [
+  {
+   "wind": 0.0,
+   "p_med": 0.0,
+   "p_lo": 0.0,
+   "p_hi": 0.0058
+  },
+  {
+   "wind": 0.5,
+   "p_med": 0.0,
+   "p_lo": 0.0,
+   "p_hi": 0.0058
+  },
+  {
+   "wind": 1.0,
+   "p_med": 0.0,
+   "p_lo": 0.0,
+   "p_hi": 0.0058
+  },
+  {
+   "wind": 1.5,
+   "p_med": 0.0,
+   "p_lo": 0.0,
+   "p_hi": 0.0058
+  },
+  {
+   "wind": 2.0,
+   "p_med": 0.0,
+   "p_lo": 0.0,
+   "p_hi": 0.0058
+  },
+  {
+   "wind": 2.5,
+   "p_med": 0.0,
+   "p_lo": 0.0,
+   "p_hi": 0.0058
+  },
+  {
+   "wind": 3.0,
+   "p_med": 0.0,
+   "p_lo": 0.0,
+   "p_hi": 0.0058
+  },
+  {
+   "wind": 3.5,
+   "p_med": 0.0089,
+   "p_lo": 0.0031,
+   "p_hi": 0.0147
+  },
+  {
+   "wind": 4.0,
+   "p_med": 0.0353,
+   "p_lo": 0.0144,
+   "p_hi": 0.0563
+  },
+  {
+   "wind": 4.5,
+   "p_med": 0.0652,
+   "p_lo": 0.0443,
+   "p_hi": 0.0862
+  },
+  {
+   "wind": 5.0,
+   "p_med": 0.1013,
+   "p_lo": 0.0803,
+   "p_hi": 0.1222
+  },
+  {
+   "wind": 5.5,
+   "p_med": 0.1475,
+   "p_lo": 0.1265,
+   "p_hi": 0.1684
+  },
+  {
+   "wind": 6.0,
+   "p_med": 0.1995,
+   "p_lo": 0.1786,
+   "p_hi": 0.2205
+  },
+  {
+   "wind": 6.5,
+   "p_med": 0.265,
+   "p_lo": 0.2441,
+   "p_hi": 0.286
+  },
+  {
+   "wind": 7.0,
+   "p_med": 0.3232,
+   "p_lo": 0.3023,
+   "p_hi": 0.3442
+  },
+  {
+   "wind": 7.5,
+   "p_med": 0.3943,
+   "p_lo": 0.3733,
+   "p_hi": 0.4152
+  },
+  {
+   "wind": 8.0,
+   "p_med": 0.4626,
+   "p_lo": 0.4218,
+   "p_hi": 0.5034
+  },
+  {
+   "wind": 8.5,
+   "p_med": 0.5441,
+   "p_lo": 0.5032,
+   "p_hi": 0.5849
+  },
+  {
+   "wind": 9.0,
+   "p_med": 0.6199,
+   "p_lo": 0.5791,
+   "p_hi": 0.6607
+  },
+  {
+   "wind": 9.5,
+   "p_med": 0.7064,
+   "p_lo": 0.6656,
+   "p_hi": 0.7472
+  },
+  {
+   "wind": 10.0,
+   "p_med": 0.7687,
+   "p_lo": 0.7279,
+   "p_hi": 0.8095
+  },
+  {
+   "wind": 10.5,
+   "p_med": 0.8355,
+   "p_lo": 0.7947,
+   "p_hi": 0.8763
+  },
+  {
+   "wind": 11.0,
+   "p_med": 0.8833,
+   "p_lo": 0.8425,
+   "p_hi": 0.9241
+  },
+  {
+   "wind": 11.5,
+   "p_med": 0.9253,
+   "p_lo": 0.8845,
+   "p_hi": 0.9661
+  },
+  {
+   "wind": 12.0,
+   "p_med": 0.9504,
+   "p_lo": 0.9303,
+   "p_hi": 0.9705
+  },
+  {
+   "wind": 12.5,
+   "p_med": 0.9602,
+   "p_lo": 0.9401,
+   "p_hi": 0.9803
+  },
+  {
+   "wind": 13.0,
+   "p_med": 0.9648,
+   "p_lo": 0.9447,
+   "p_hi": 0.9849
+  },
+  {
+   "wind": 13.5,
+   "p_med": 0.9673,
+   "p_lo": 0.9473,
+   "p_hi": 0.9874
+  },
+  {
+   "wind": 14.0,
+   "p_med": 0.9715,
+   "p_lo": 0.9515,
+   "p_hi": 0.9916
+  },
+  {
+   "wind": 14.5,
+   "p_med": 0.97,
+   "p_lo": 0.9499,
+   "p_hi": 0.9901
+  },
+  {
+   "wind": 15.0,
+   "p_med": 0.9707,
+   "p_lo": 0.9507,
+   "p_hi": 0.9908
+  },
+  {
+   "wind": 15.5,
+   "p_med": 0.9666,
+   "p_lo": 0.9466,
+   "p_hi": 0.9867
+  },
+  {
+   "wind": 16.0,
+   "p_med": 0.9726,
+   "p_lo": 0.9525,
+   "p_hi": 0.9927
+  },
+  {
+   "wind": 16.5,
+   "p_med": 0.9751,
+   "p_lo": 0.9551,
+   "p_hi": 0.9952
+  },
+  {
+   "wind": 17.0,
+   "p_med": 0.9758,
+   "p_lo": 0.9557,
+   "p_hi": 0.9959
+  },
+  {
+   "wind": 17.5,
+   "p_med": 0.976,
+   "p_lo": 0.9559,
+   "p_hi": 0.996
+  },
+  {
+   "wind": 18.0,
+   "p_med": 0.9763,
+   "p_lo": 0.9563,
+   "p_hi": 0.9964
+  },
+  {
+   "wind": 18.5,
+   "p_med": 0.9785,
+   "p_lo": 0.9585,
+   "p_hi": 0.9986
+  },
+  {
+   "wind": 19.0,
+   "p_med": 0.9757,
+   "p_lo": 0.9557,
+   "p_hi": 0.9958
+  },
+  {
+   "wind": 19.5,
+   "p_med": 0.9933,
+   "p_lo": 0.9732,
+   "p_hi": 1.0133
+  },
+  {
+   "wind": 20.0,
+   "p_med": 0.9687,
+   "p_lo": 0.9487,
+   "p_hi": 0.9888
+  },
+  {
+   "wind": 20.5,
+   "p_med": 0.9829,
+   "p_lo": 0.9629,
+   "p_hi": 1.003
+  },
+  {
+   "wind": 21.0,
+   "p_med": 0.9736,
+   "p_lo": 0.9536,
+   "p_hi": 0.9937
+  },
+  {
+   "wind": 21.5,
+   "p_med": 0.9591,
+   "p_lo": 0.939,
+   "p_hi": 0.9791
+  },
+  {
+   "wind": 22.0,
+   "p_med": 0.8939,
+   "p_lo": 0.8739,
+   "p_hi": 0.914
+  },
+  {
+   "wind": 22.5,
+   "p_med": 0.8939,
+   "p_lo": 0.8739,
+   "p_hi": 0.914
+  },
+  {
+   "wind": 23.0,
+   "p_med": 0.8939,
+   "p_lo": 0.8739,
+   "p_hi": 0.914
+  },
+  {
+   "wind": 23.5,
+   "p_med": 0.8939,
+   "p_lo": 0.8739,
+   "p_hi": 0.914
+  },
+  {
+   "wind": 24.0,
+   "p_med": 0.8939,
+   "p_lo": 0.8739,
+   "p_hi": 0.914
+  },
+  {
+   "wind": 24.5,
+   "p_med": 0.8939,
+   "p_lo": 0.8739,
+   "p_hi": 0.914
+  },
+  {
+   "wind": 25.0,
+   "p_med": 0.8939,
+   "p_lo": 0.8739,
+   "p_hi": 0.914
+  }
+ ],
+ "audit": {
+  "split": "fit = first 80 % of train rows of all 22 datasets; calibration = last 20 % of each dataset's train period; test = prediction rows of the 10 normal datasets. Rows matched by value fingerprint (asset + 8 signals) are removed from fit/calibration when they also occur in test/calibration.",
+  "leakage_checks": [
+   {
+    "check": "legacy split (forecasting_model/power_model.py): test rows absent from its training set",
+    "passed": false,
+    "result": 0.3134,
+    "n_test": 7815,
+    "detail": "31.3% of the legacy test rows (7,815) also occur in its training set: overlapping datasets of the same turbine share physical records under different anonymised timestamps, so the legacy de-duplication on (asset, time_stamp, wind, power) misses them. The legacy R2 0.995 / RMSE 1.82 % is therefore partly in-sample."
+   },
+   {
+    "check": "legacy test rows duplicated between normal datasets",
+    "passed": true,
+    "result": 0.0,
+    "detail": "0.0% of legacy test rows appear twice (inflates n)"
+   },
+   {
+    "check": "new split: test fingerprints in fit or calibration",
+    "passed": true,
+    "result": 0,
+    "detail": "removed by fingerprint matching"
+   },
+   {
+    "check": "new split: calibration fingerprints in fit",
+    "passed": true,
+    "result": 0,
+    "detail": "calibration rows removed from fit"
+   },
+   {
+    "check": "status / event labels as model inputs",
+    "passed": true,
+    "detail": "not used (status 0/2 only filters training rows)"
+   },
+   {
+    "check": "day-of-year feature",
+    "passed": true,
+    "detail": "dropped: timestamps are anonymised per file"
+   }
+  ]
+ },
+ "features": [
+  "wind",
+  "wind2",
+  "wind3",
+  "wind_norm",
+  "wind_std_1h",
+  "wind_change",
+  "air_density",
+  "temp",
+  "dir_sin",
+  "dir_cos",
+  "hour_sin",
+  "hour_cos"
+ ],
+ "dataset": {
+  "record": "15846963",
+  "doi": "10.5281/zenodo.15846963",
+  "version": 6
+ },
+ "pipeline_version": "windtwin-2.0.0",
+ "generated_at": "2026-10-26T09:27:51"
+}

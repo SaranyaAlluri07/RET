@@ -1,0 +1,98 @@
+Running rows: 32,275   CV groups: 21   components: ['Gearbox', 'Generator bearings', 'Transformer', 'Hydraulic group', 'Hub / pitch']
+   E (physics rule): settings chosen per fold: q      T    H | 0.990  2.8  1    10 | 0.995  1.7  1     4 |        2.0  1     2
+   F (ML classifier): settings chosen per fold: q      T    H | 0.990  2.8  1    10 | 0.995  1.7  1     4 |        2.0  1     2
+
+=== Attempt 2 vs old model (leave-one-group-out, out-of-fold, running rows) ===
+                                                    approach  accuracy  macro-F1  precision of fault alarms (rows)  correct type when flagged (rows) events detected events correct class false alarms (healthy)
+                     A  old model (v1 threshold + diagnosis)     0.632     0.158                             1.000                             0.554            1/12                 0/12                   0/10
+            E  fault-component detector + physics rule (new)     0.630     0.157                             0.523                             0.587            2/12                 1/12                   1/10
+F  fault-component detector + ML fault-type classifier (new)     0.630     0.157                             0.523                             0.565            2/12                 1/12                   1/10
+
+=== Attempt 1 (for comparison) ===
+                                    approach  accuracy  macro-F1  fault rows recall events detected events correct class false alarms (healthy)
+     A  old model (v1 threshold + diagnosis)     0.632     0.158              0.005            1/12                 0/12                   0/10
+        B  Gradient Boosting, class-balanced     0.526     0.154              0.257            9/12                 1/12                   7/10
+                  C  Random Forest, balanced     0.567     0.159              0.175            8/12                 1/12                   6/10
+D  residual detector + fault-type classifier     0.461     0.146              0.302           10/12                 3/12                   8/10
+
+--- E  fault-component detector + physics rule (new): per-class metrics (rows) ---
+                   precision  recall     F1  support (rows)
+normal                 0.631   0.998  0.773           20357
+hydraulic              0.565   0.006  0.012            4387
+gearbox                0.000   0.000  0.000            3252
+generator_bearing      1.000   0.000  0.001            3450
+transformer            0.000   0.000  0.000             829
+accuracy 0.630   macro-F1 0.157
+--- confusion matrix (rows) ---
+                        pred normal  pred hydraulic  pred gearbox  pred generator_bearing  pred transformer
+true normal                   20315               1             0                       0                41
+true hydraulic                 4361              26             0                       0                 0
+true gearbox                   3252               0             0                       0                 0
+true generator_bearing         3430              19             0                       1                 0
+true transformer                829               0             0                       0                 0
+--- event level ---
+ dataset              true detected correct_class  predicted_mostly alarm_before_fault  running_rows_in_window false_alarm
+       0 generator_bearing     True         False         hydraulic              False                  1403.0         NaN
+       3            normal      NaN           NaN               NaN                NaN                     NaN        True
+      10           gearbox    False         False            normal              False                   869.0         NaN
+      13            normal      NaN           NaN               NaN                NaN                     NaN       False
+      14            normal      NaN           NaN               NaN                NaN                     NaN       False
+      17            normal      NaN           NaN               NaN                NaN                     NaN       False
+      22         hydraulic    False         False            normal              False                   768.0         NaN
+      24            normal      NaN           NaN               NaN                NaN                     NaN       False
+      25            normal      NaN           NaN               NaN                NaN                     NaN       False
+      26         hydraulic    False         False            normal              False                   962.0         NaN
+      38            normal      NaN           NaN               NaN                NaN                     NaN       False
+      40 generator_bearing    False         False generator_bearing              False                  2047.0         NaN
+      42         hydraulic     True          True         hydraulic              False                   501.0         NaN
+      45         hydraulic    False         False            normal              False                   876.0         NaN
+      51           gearbox    False         False            normal              False                  1412.0         NaN
+      68       transformer    False         False            normal              False                   829.0         NaN
+      69            normal      NaN           NaN               NaN                NaN                     NaN       False
+      71            normal      NaN           NaN               NaN                NaN                     NaN       False
+      72           gearbox    False         False            normal              False                   971.0         NaN
+      73         hydraulic    False         False            normal              False                   669.0         NaN
+      84         hydraulic    False         False            normal              False                   611.0         NaN
+      92            normal      NaN           NaN               NaN                NaN                     NaN       False
+
+--- F  fault-component detector + ML fault-type classifier (new): per-class metrics (rows) ---
+                   precision  recall     F1  support (rows)
+normal                 0.631   0.998  0.773           20357
+hydraulic              0.295   0.006  0.012            4387
+gearbox                0.000   0.000  0.000            3252
+generator_bearing      0.000   0.000  0.000            3450
+transformer            0.000   0.000  0.000             829
+accuracy 0.630   macro-F1 0.157
+--- confusion matrix (rows) ---
+                        pred normal  pred hydraulic  pred gearbox  pred generator_bearing  pred transformer
+true normal                   20315              42             0                       0                 0
+true hydraulic                 4361              26             0                       0                 0
+true gearbox                   3252               0             0                       0                 0
+true generator_bearing         3430              20             0                       0                 0
+true transformer                829               0             0                       0                 0
+--- event level ---
+ dataset              true detected correct_class predicted_mostly alarm_before_fault  running_rows_in_window false_alarm
+       0 generator_bearing     True         False        hydraulic              False                  1403.0         NaN
+       3            normal      NaN           NaN              NaN                NaN                     NaN        True
+      10           gearbox    False         False           normal              False                   869.0         NaN
+      13            normal      NaN           NaN              NaN                NaN                     NaN       False
+      14            normal      NaN           NaN              NaN                NaN                     NaN       False
+      17            normal      NaN           NaN              NaN                NaN                     NaN       False
+      22         hydraulic    False         False           normal              False                   768.0         NaN
+      24            normal      NaN           NaN              NaN                NaN                     NaN       False
+      25            normal      NaN           NaN              NaN                NaN                     NaN       False
+      26         hydraulic    False         False           normal              False                   962.0         NaN
+      38            normal      NaN           NaN              NaN                NaN                     NaN       False
+      40 generator_bearing    False         False        hydraulic              False                  2047.0         NaN
+      42         hydraulic     True          True        hydraulic              False                   501.0         NaN
+      45         hydraulic    False         False           normal              False                   876.0         NaN
+      51           gearbox    False         False           normal              False                  1412.0         NaN
+      68       transformer    False         False           normal              False                   829.0         NaN
+      69            normal      NaN           NaN              NaN                NaN                     NaN       False
+      71            normal      NaN           NaN              NaN                NaN                     NaN       False
+      72           gearbox    False         False           normal              False                   971.0         NaN
+      73         hydraulic    False         False           normal              False                   669.0         NaN
+      84         hydraulic    False         False           normal              False                   611.0         NaN
+      92            normal      NaN           NaN              NaN                NaN                     NaN       False
+
+Final setting (all data): normal level = q0.99, threshold 2.8 x normal level, alarm after 1 h

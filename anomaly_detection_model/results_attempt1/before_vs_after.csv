@@ -1,0 +1,5 @@
+approach,accuracy,macro-F1,fault rows recall,events detected,events correct class,false alarms (healthy)
+A  old model (v1 threshold + diagnosis),0.632,0.158,0.005,1/12,0/12,0/10
+"B  Gradient Boosting, class-balanced",0.526,0.154,0.257,9/12,1/12,7/10
+"C  Random Forest, balanced",0.567,0.159,0.175,8/12,1/12,6/10
+D  residual detector + fault-type classifier,0.461,0.146,0.302,10/12,3/12,8/10

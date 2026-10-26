@@ -1,0 +1,41 @@
+{
+  "summary": [
+    {
+      "approach": "A  old model (v1 threshold + diagnosis)",
+      "accuracy": 0.632,
+      "macro-F1": 0.158,
+      "fault rows recall": 0.005,
+      "events detected": "1/12",
+      "events correct class": "0/12",
+      "false alarms (healthy)": "0/10"
+    },
+    {
+      "approach": "B  Gradient Boosting, class-balanced",
+      "accuracy": 0.526,
+      "macro-F1": 0.154,
+      "fault rows recall": 0.257,
+      "events detected": "9/12",
+      "events correct class": "1/12",
+      "false alarms (healthy)": "7/10"
+    },
+    {
+      "approach": "C  Random Forest, balanced",
+      "accuracy": 0.567,
+      "macro-F1": 0.159,
+      "fault rows recall": 0.175,
+      "events detected": "8/12",
+      "events correct class": "1/12",
+      "false alarms (healthy)": "6/10"
+    },
+    {
+      "approach": "D  residual detector + fault-type classifier",
+      "accuracy": 0.461,
+      "macro-F1": 0.146,
+      "fault rows recall": 0.302,
+      "events detected": "10/12",
+      "events correct class": "3/12",
+      "false alarms (healthy)": "8/10"
+    }
+  ],
+  "best": "C  Random Forest, balanced"
+}

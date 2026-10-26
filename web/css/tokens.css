@@ -1,0 +1,124 @@
+/* WindTwin design tokens. Dark "control-room" theme is the default; light theme via [data-theme="light"].
+   Status colours are reserved for alarm state only and always ship with an icon + label. */
+:root {
+  color-scheme: dark;
+  /* type */
+  --font-sans: Inter, "Inter var", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: ui-monospace, "Cascadia Mono", "SF Mono", Consolas, Menlo, monospace;
+  --fs-xs: 11px; --fs-sm: 12px; --fs-md: 13px; --fs-lg: 15px; --fs-xl: 18px; --fs-2xl: 24px;
+  --fw-regular: 400; --fw-medium: 500; --fw-semibold: 600; --fw-bold: 700;
+  --lh: 1.45;
+  /* spacing (4px grid) */
+  --sp-1: 4px; --sp-2: 8px; --sp-3: 12px; --sp-4: 16px; --sp-5: 20px; --sp-6: 24px; --sp-8: 32px;
+  --radius-sm: 4px; --radius-md: 6px; --radius-lg: 10px; --radius-pill: 999px;
+  --rail-w: 76px; --topbar-h: 52px; --banner-h: 38px;
+  --shadow-1: 0 1px 2px rgba(0,0,0,.35), 0 4px 16px rgba(0,0,0,.25);
+  --shadow-drawer: -12px 0 32px rgba(0,0,0,.45);
+
+  /* surfaces (neutral slate) */
+  --bg: #0a0e13;
+  --surface-1: #10161d;
+  --surface-2: #151d26;
+  --surface-3: #1b2530;
+  --surface-hover: #1f2a36;
+  --border: #253140;
+  --border-strong: #33424f;
+  --text: #e6edf3;
+  --text-2: #a8b5c3;
+  --muted: #7b8a9c;
+  --accent: #22c3d6;
+  --accent-strong: #5fd8e6;
+  --accent-soft: rgba(34,195,214,.14);
+  --on-accent: #04161a;
+  --focus: #5fd8e6;
+
+  /* status palette (state) */
+  --st-normal: #2fbf71;
+  --st-watch: #4aa3ff;
+  --st-warning: #f5a524;
+  --st-fault: #f05252;
+  --st-unknown: #a08ee0;
+  --st-offline: #6f7c8b;
+  --st-tripped: #b4233a;
+  --st-normal-bg: rgba(47,191,113,.14);
+  --st-watch-bg: rgba(74,163,255,.14);
+  --st-warning-bg: rgba(245,165,36,.15);
+  --st-fault-bg: rgba(240,82,82,.16);
+  --st-unknown-bg: rgba(160,142,224,.16);
+  --st-offline-bg: rgba(111,124,139,.18);
+  --st-tripped-bg: rgba(180,35,58,.28);
+  --st-nodata: #3a4655;
+
+  /* mode identity (data source) */
+  --mode-replay: #22c3d6;
+  --mode-replay-bg: rgba(34,195,214,.10);
+  --mode-sim: #c08cff;
+  --mode-sim-bg: rgba(192,140,255,.10);
+  --oracle: #e0b341;
+  --oracle-bg: rgba(224,179,65,.07);
+
+  /* charts (dataviz reference palette, dark steps) */
+  --chart-grid: #222c37;
+  --chart-axis: #3a4655;
+  --chart-band: rgba(168,181,195,.16);
+  --chart-observed: #22c3d6;
+  --chart-expected: #a8b5c3;
+  --chart-event: rgba(240,82,82,.12);
+  --series-1: #3987e5; --series-2: #d95926; --series-3: #199e70; --series-4: #c98500;
+  --series-5: #d55181; --series-6: #2fa52f; --series-7: #9085e9; --series-8: #e66767;
+  --seq-1: #16243a; --seq-2: #184f95; --seq-3: #2a78d6; --seq-4: #6da7ec; --seq-5: #cde2fb;
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
+  --shadow-1: 0 1px 2px rgba(15,23,32,.06), 0 4px 14px rgba(15,23,32,.06);
+  --shadow-drawer: -12px 0 32px rgba(15,23,32,.16);
+  --bg: #eef1f4;
+  --surface-1: #ffffff;
+  --surface-2: #f7f9fb;
+  --surface-3: #eef2f6;
+  --surface-hover: #e8eef4;
+  --border: #dbe2e9;
+  --border-strong: #c3ccd6;
+  --text: #0f1720;
+  --text-2: #3f4c59;
+  --muted: #66727f;
+  --accent: #0b8597;
+  --accent-strong: #076776;
+  --accent-soft: rgba(11,133,151,.10);
+  --on-accent: #ffffff;
+  --focus: #0b8597;
+
+  --st-normal: #148a4c;
+  --st-watch: #1f6fd1;
+  --st-warning: #b56b00;
+  --st-fault: #cc2b2b;
+  --st-unknown: #6e57c2;
+  --st-offline: #6b7785;
+  --st-tripped: #8c1023;
+  --st-normal-bg: rgba(20,138,76,.10);
+  --st-watch-bg: rgba(31,111,209,.10);
+  --st-warning-bg: rgba(181,107,0,.12);
+  --st-fault-bg: rgba(204,43,43,.10);
+  --st-unknown-bg: rgba(110,87,194,.11);
+  --st-offline-bg: rgba(107,119,133,.12);
+  --st-tripped-bg: rgba(140,16,35,.14);
+  --st-nodata: #c9d1da;
+
+  --mode-replay: #0b8597;
+  --mode-replay-bg: rgba(11,133,151,.08);
+  --mode-sim: #7c3fd0;
+  --mode-sim-bg: rgba(124,63,208,.07);
+  --oracle: #8a6400;
+  --oracle-bg: rgba(224,179,65,.10);
+
+  --chart-grid: #e7ebef;
+  --chart-axis: #c3ccd6;
+  --chart-band: rgba(63,76,89,.12);
+  --chart-observed: #0b8597;
+  --chart-expected: #66727f;
+  --chart-event: rgba(204,43,43,.08);
+  --series-1: #2a78d6; --series-2: #eb6834; --series-3: #1baf7a; --series-4: #eda100;
+  --series-5: #e87ba4; --series-6: #008300; --series-7: #6250d6; --series-8: #e34948;
+  --seq-1: #eef4fc; --seq-2: #b7d3f6; --seq-3: #6da7ec; --seq-4: #2a78d6; --seq-5: #104281;
+}

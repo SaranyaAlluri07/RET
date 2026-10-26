@@ -1,0 +1,2441 @@
+{
+ "method": "nbm_ewma",
+ "name": "NBM + normalized residual + EWMA",
+ "per_dataset": [
+  {
+   "id": 0,
+   "asset": 0,
+   "label": "anomaly",
+   "description": "Generator bearing failure",
+   "detected": true,
+   "first_alarm": "2023-08-06T06:10:00",
+   "delay_h": 0.0,
+   "lead_to_end_h": 336.0,
+   "false_alarms": 0,
+   "pre_event_alarms": 5,
+   "diagnosis": "Generator windings",
+   "diagnosis_correct": false,
+   "params": {
+    "lam": 0.1,
+    "L": 1,
+    "k": 1.0,
+    "h": 40.0,
+    "persist": 1,
+    "cooldown": 1,
+    "clear": 1.0,
+    "use_ewma": true,
+    "use_cusum": false,
+    "watch": 0.7,
+    "fault_mult": 4,
+    "cusum_cap": 0.0,
+    "combine": "or"
+   },
+   "diagnosis_detail": {
+    "top_component": "Generator windings",
+    "shares": {
+     "Gearbox": 0.014,
+     "Generator bearings": 0.026,
+     "Generator windings": 0.315,
+     "Transformer": 0.213,
+     "Hydraulic group": 0.0,
+     "Hub / pitch": 0.111,
+     "Converter": 0.0,
+     "Nacelle cabinets": 0.09,
+     "Electrical balance": 0.232,
+     "Power performance": 0.0
+    },
+    "reasons": [],
+    "evidence": [
+     {
+      "signal": "pitch",
+      "label": "Pitch angle",
+      "component": "Hub / pitch",
+      "observed": null,
+      "expected": null,
+      "z": 8.0,
+      "contribution": 0.427
+     },
+     {
+      "signal": "sensor_39_avg",
+      "label": "HV transformer L2 temp",
+      "component": "Transformer",
+      "observed": null,
+      "expected": null,
+      "z": 1.52,
+      "contribution": 0.081
+     },
+     {
+      "signal": "stator_spread",
+      "label": "Stator phase spread",
+      "component": "Generator windings",
+      "observed": null,
+      "expected": null,
+      "z": 1.434,
+      "contribution": 0.077
+     },
+     {
+      "signal": "sensor_38_avg",
+      "label": "HV transformer L1 temp",
+      "component": "Transformer",
+      "observed": null,
+      "expected": null,
+      "z": 1.328,
+      "contribution": 0.071
+     }
+    ]
+   },
+   "care_parts": {
+    "f_beta": 0.5848,
+    "accuracy": null,
+    "weighted_score": 0.3483,
+    "max_criticality": 199,
+    "detected_care": true,
+    "tp": 611,
+    "fp": 192,
+    "fn": 1401,
+    "tn": 634
+   }
+  },
+  {
+   "id": 3,
+   "asset": 10,
+   "label": "normal",
+   "description": "",
+   "detected": false,
+   "first_alarm": null,
+   "delay_h": null,
+   "lead_to_end_h": null,
+   "false_alarms": 16,
+   "pre_event_alarms": 0,
+   "diagnosis": "Generator windings",
+   "diagnosis_correct": null,
+   "params": {
+    "lam": 0.02,
+    "L": 1,
+    "k": 1.0,
+    "h": 40.0,
+    "persist": 1,
+    "cooldown": 1,
+    "clear": 1.0,
+    "use_ewma": true,
+    "use_cusum": false,
+    "watch": 0.7,
+    "fault_mult": 4,
+    "cusum_cap": 0.0,
+    "combine": "or"
+   },
+   "diagnosis_detail": {
+    "top_component": "Generator windings",
+    "shares": {
+     "Gearbox": 0.0,
+     "Generator bearings": 0.029,
+     "Generator windings": 0.351,
+     "Transformer": 0.0,
+     "Hydraulic group": 0.095,
+     "Hub / pitch": 0.055,
+     "Converter": 0.18,
+     "Nacelle cabinets": 0.247,
+     "Electrical balance": 0.042,
+     "Power performance": 0.0
+    },
+    "reasons": [],
+    "evidence": [
+     {
+      "signal": "sensor_19_avg",
+      "label": "Split ring chamber temp",
+      "component": "Nacelle cabinets",
+      "observed": null,
+      "expected": null,
+      "z": 1.219,
+      "contribution": 0.087
+     },
+     {
+      "signal": "pitch",
+      "label": "Pitch angle",
+      "component": "Hub / pitch",
+      "observed": null,
+      "expected": null,
+      "z": 0.909,
+      "contribution": 0.068
+     },
+     {
+      "signal": "sensor_35_avg",
+      "label": "Rotor-side IGBT L1 temp",
+      "component": "Converter",
+      "observed": null,
+      "expected": null,
+      "z": 0.88,
+      "contribution": 0.067
+     },
+     {
+      "signal": "stator_spread",
+      "label": "Stator phase spread",
+      "component": "Generator windings",
+      "observed": null,
+      "expected": null,
+      "z": 0.659,
+      "contribution": 0.065
+     }
+    ]
+   },
+   "care_parts": {
+    "f_beta": null,
+    "accuracy": 0.7992,
+    "weighted_score": null,
+    "max_criticality": 314,
+    "detected_care": true,
+    "tp": 0,
+    "fp": 663,
+    "fn": 0,
+    "tn": 2639
+   }
+  },
+  {
+   "id": 10,
+   "asset": 10,
+   "label": "anomaly",
+   "description": "Gearbox failure",
+   "detected": true,
+   "first_alarm": "2023-10-14T17:00:00",
+   "delay_h": 80.3,
+   "lead_to_end_h": 87.7,
+   "false_alarms": 0,
+   "pre_event_alarms": 1,
+   "diagnosis": "Generator bearings",
+   "diagnosis_correct": false,
+   "params": {
+    "lam": 0.02,
+    "L": 1,
+    "k": 1.0,
+    "h": 40.0,
+    "persist": 1,
+    "cooldown": 1,
+    "clear": 1.0,
+    "use_ewma": true,
+    "use_cusum": false,
+    "watch": 0.7,
+    "fault_mult": 4,
+    "cusum_cap": 0.0,
+    "combine": "or"
+   },
+   "diagnosis_detail": {
+    "top_component": "Generator bearings",
+    "shares": {
+     "Gearbox": 0.084,
+     "Generator bearings": 0.286,
+     "Generator windings": 0.105,
+     "Transformer": 0.0,
+     "Hydraulic group": 0.066,
+     "Hub / pitch": 0.042,
+     "Converter": 0.128,
+     "Nacelle cabinets": 0.143,
+     "Electrical balance": 0.146,
+     "Power performance": 0.0
+    },
+    "reasons": [],
+    "evidence": [
+     {
+      "signal": "gen_bearing_diff",
+      "label": "Gen. bearing DE \u2212 NDE",
+      "component": "Generator bearings",
+      "observed": null,
+      "expected": null,
+      "z": -3.21,
+      "contribution": 0.147
+     },
+     {
+      "signal": "sensor_14_avg",
+      "label": "Gen. bearing NDE temp",
+      "component": "Generator bearings",
+      "observed": null,
+      "expected": null,
+      "z": 2.859,
+      "contribution": 0.138
+     },
+     {
+      "signal": "current_imbalance",
+      "label": "Phase current imbalance",
+      "component": "Electrical balance",
+      "observed": null,
+      "expected": null,
+      "z": 1.073,
+      "contribution": 0.054
+     },
+     {
+      "signal": "sensor_9_avg",
+      "label": "VCP-board temp",
+      "component": "Nacelle cabinets",
+      "observed": null,
+      "expected": null,
+      "z": 0.926,
+      "contribution": 0.046
+     }
+    ]
+   },
+   "care_parts": {
+    "f_beta": 0.5862,
+    "accuracy": null,
+    "weighted_score": 0.1248,
+    "max_criticality": 79,
+    "detected_care": true,
+    "tp": 221,
+    "fp": 5,
+    "fn": 760,
+    "tn": 283
+   }
+  },
+  {
+   "id": 13,
+   "asset": 21,
+   "label": "normal",
+   "description": "",
+   "detected": false,
+   "first_alarm": null,
+   "delay_h": null,
+   "lead_to_end_h": null,
+   "false_alarms": 56,
+   "pre_event_alarms": 0,
+   "diagnosis": "Generator bearings",
+   "diagnosis_correct": null,
+   "params": {
+    "lam": 0.2,
+    "L": 1,
+    "k": 1.0,
+    "h": 40.0,
+    "persist": 1,
+    "cooldown": 1,
+    "clear": 1.0,
+    "use_ewma": true,
+    "use_cusum": false,
+    "watch": 0.7,
+    "fault_mult": 4,
+    "cusum_cap": 0.0,
+    "combine": "or"
+   },
+   "diagnosis_detail": {
+    "top_component": "Generator bearings",
+    "shares": {
+     "Gearbox": 0.08,
+     "Generator bearings": 0.297,
+     "Generator windings": 0.177,
+     "Transformer": 0.096,
+     "Hydraulic group": 0.112,
+     "Hub / pitch": 0.008,
+     "Converter": 0.132,
+     "Nacelle cabinets": 0.0,
+     "Electrical balance": 0.097,
+     "Power performance": 0.0
+    },
+    "reasons": [],
+    "evidence": [
+     {
+      "signal": "sensor_13_avg",
+      "label": "Gen. bearing DE temp",
+      "component": "Generator bearings",
+      "observed": null,
+      "expected": null,
+      "z": 5.317,
+      "contribution": 0.243
+     },
+     {
+      "signal": "gen_bearing_diff",
+      "label": "Gen. bearing DE \u2212 NDE",
+      "component": "Generator bearings",
+      "observed": null,
+      "expected": null,
+      "z": 4.351,
+      "contribution": 0.227
+     },
+     {
+      "signal": "current_imbalance",
+      "label": "Phase current imbalance",
+      "component": "Electrical balance",
+      "observed": null,
+      "expected": null,
+      "z": 1.375,
+      "contribution": 0.062
+     },
+     {
+      "signal": "sensor_36_avg",
+      "label": "Rotor-side IGBT L2 temp",
+      "component": "Converter",
+      "observed": null,
+      "expected": null,
+      "z": 0.859,
+      "contribution": 0.045
+     }
+    ]
+   },
+   "care_parts": {
+    "f_beta": null,
+    "accuracy": 0.8937,
+    "weighted_score": null,
+    "max_criticality": 43,
+    "detected_care": false,
+    "tp": 0,
+    "fp": 381,
+    "fn": 0,
+    "tn": 3202
+   }
+  },
+  {
+   "id": 14,
+   "asset": 13,
+   "label": "normal",
+   "description": "",
+   "detected": false,
+   "first_alarm": null,
+   "delay_h": null,
+   "lead_to_end_h": null,
+   "false_alarms": 14,
+   "pre_event_alarms": 0,
+   "diagnosis": "Electrical balance",
+   "diagnosis_correct": null,
+   "params": {
+    "lam": 0.02,
+    "L": 1,
+    "k": 1.0,
+    "h": 40.0,
+    "persist": 1,
+    "cooldown": 1,
+    "clear": 1.0,
+    "use_ewma": true,
+    "use_cusum": false,
+    "watch": 0.7,
+    "fault_mult": 4,
+    "cusum_cap": 0.0,
+    "combine": "or"
+   },
+   "diagnosis_detail": {
+    "top_component": "Electrical balance",
+    "shares": {
+     "Gearbox": 0.225,
+     "Generator bearings": 0.169,
+     "Generator windings": 0.077,
+     "Transformer": 0.0,
+     "Hydraulic group": 0.052,
+     "Hub / pitch": 0.017,
+     "Converter": 0.021,
+     "Nacelle cabinets": 0.101,
+     "Electrical balance": 0.338,
+     "Power performance": 0.0
+    },
+    "reasons": [],
+    "evidence": [
+     {
+      "signal": "current_imbalance",
+      "label": "Phase current imbalance",
+      "component": "Electrical balance",
+      "observed": null,
+      "expected": null,
+      "z": 2.849,
+      "contribution": 0.233
+     },
+     {
+      "signal": "gen_bearing_diff",
+      "label": "Gen. bearing DE \u2212 NDE",
+      "component": "Generator bearings",
+      "observed": null,
+      "expected": null,
+      "z": -1.203,
+      "contribution": 0.098
+     },
+     {
+      "signal": "sensor_14_avg",
+      "label": "Gen. bearing NDE temp",
+      "component": "Generator bearings",
+      "observed": null,
+      "expected": null,
+      "z": 0.934,
+      "contribution": 0.076
+     },
+     {
+      "signal": "gbx_bearing_minus_oil",
+      "label": "Gearbox bearing \u2212 oil",
+      "component": "Gearbox",
+      "observed": null,
+      "expected": null,
+      "z": 0.775,
+      "contribution": 0.069
+     }
+    ]
+   },
+   "care_parts": {
+    "f_beta": null,
+    "accuracy": 0.6849,
+    "weighted_score": null,
+    "max_criticality": 125,
+    "detected_care": true,
+    "tp": 0,
+    "fp": 599,
+    "fn": 0,
+    "tn": 1302
+   }
+  },
+  {
+   "id": 17,
+   "asset": 10,
+   "label": "normal",
+   "description": "",
+   "detected": false,
+   "first_alarm": null,
+   "delay_h": null,
+   "lead_to_end_h": null,
+   "false_alarms": 20,
+   "pre_event_alarms": 0,
+   "diagnosis": "Hub / pitch",
+   "diagnosis_correct": null,
+   "params": {
+    "lam": 0.02,
+    "L": 1,
+    "k": 1.0,
+    "h": 40.0,
+    "persist": 1,
+    "cooldown": 1,
+    "clear": 1.0,
+    "use_ewma": true,
+    "use_cusum": false,
+    "watch": 0.7,
+    "fault_mult": 4,
+    "cusum_cap": 0.0,
+    "combine": "or"
+   },
+   "diagnosis_detail": {
+    "top_component": "Hub / pitch",
+    "shares": {
+     "Gearbox": 0.128,
+     "Generator bearings": 0.058,
+     "Generator windings": 0.073,
+     "Transformer": 0.0,
+     "Hydraulic group": 0.0,
+     "Hub / pitch": 0.383,
+     "Converter": 0.071,
+     "Nacelle cabinets": 0.24,
+     "Electrical balance": 0.0,
+     "Power performance": 0.048
+    },
+    "reasons": [],
+    "evidence": [
+     {
+      "signal": "sensor_53_avg",
+      "label": "Nose cone temp",
+      "component": "Hub / pitch",
+      "observed": null,
+      "expected": null,
+      "z": 1.443,
+      "contribution": 0.146
+     },
+     {
+      "signal": "sensor_9_avg",
+      "label": "VCP-board temp",
+      "component": "Nacelle cabinets",
+      "observed": null,
+      "expected": null,
+      "z": 1.12,
+      "contribution": 0.104
+     },
+     {
+      "signal": "gen_bearing_diff",
+      "label": "Gen. bearing DE \u2212 NDE",
+      "component": "Generator bearings",
+      "observed": null,
+      "expected": null,
+      "z": 0.465,
+      "contribution": 0.104
+     },
+     {
+      "signal": "sensor_6_avg",
+      "label": "Hub controller temp",
+      "component": "Hub / pitch",
+      "observed": null,
+      "expected": null,
+      "z": 0.469,
+      "contribution": 0.069
+     }
+    ]
+   },
+   "care_parts": {
+    "f_beta": null,
+    "accuracy": 0.3679,
+    "weighted_score": null,
+    "max_criticality": 957,
+    "detected_care": true,
+    "tp": 0,
+    "fp": 1758,
+    "fn": 0,
+    "tn": 1023
+   }
+  },
+  {
+   "id": 22,
+   "asset": 21,
+   "label": "anomaly",
+   "description": "Hydraulic group",
+   "detected": true,
+   "first_alarm": "2023-08-12T09:50:00",
+   "delay_h": 0.0,
+   "lead_to_end_h": 168.2,
+   "false_alarms": 0,
+   "pre_event_alarms": 0,
+   "diagnosis": "Power performance",
+   "diagnosis_correct": false,
+   "params": {
+    "lam": 0.2,
+    "L": 1,
+    "k": 1.0,
+    "h": 40.0,
+    "persist": 1,
+    "cooldown": 1,
+    "clear": 1.0,
+    "use_ewma": true,
+    "use_cusum": false,
+    "watch": 0.7,
+    "fault_mult": 4,
+    "cusum_cap": 0.0,
+    "combine": "or"
+   },
+   "diagnosis_detail": {
+    "top_component": "Power performance",
+    "shares": {
+     "Gearbox": 0.131,
+     "Generator bearings": 0.031,
+     "Generator windings": 0.0,
+     "Transformer": 0.108,
+     "Hydraulic group": 0.218,
+     "Hub / pitch": 0.052,
+     "Converter": 0.034,
+     "Nacelle cabinets": 0.0,
+     "Electrical balance": 0.05,
+     "Power performance": 0.377
+    },
+    "reasons": [],
+    "evidence": [
+     {
+      "signal": "power_30_avg",
+      "label": "Grid power",
+      "component": "Power performance",
+      "observed": null,
+      "expected": null,
+      "z": 1.081,
+      "contribution": 0.11
+     },
+     {
+      "signal": "hydraulic_minus_nacelle",
+      "label": "Hydraulic oil \u2212 nacelle",
+      "component": "Hydraulic group",
+      "observed": null,
+      "expected": null,
+      "z": 0.897,
+      "contribution": 0.102
+     },
+     {
+      "signal": "sensor_11_avg",
+      "label": "Gearbox HSS bearing temp",
+      "component": "Gearbox",
+      "observed": null,
+      "expected": null,
+      "z": 0.981,
+      "contribution": 0.094
+     },
+     {
+      "signal": "pitch",
+      "label": "Pitch angle",
+      "component": "Hub / pitch",
+      "observed": null,
+      "expected": null,
+      "z": -0.737,
+      "contribution": 0.09
+     }
+    ]
+   },
+   "care_parts": {
+    "f_beta": 0.5931,
+    "accuracy": null,
+    "weighted_score": 0.3342,
+    "max_criticality": 54,
+    "detected_care": false,
+    "tp": 253,
+    "fp": 29,
+    "fn": 752,
+    "tn": 114
+   }
+  },
+  {
+   "id": 24,
+   "asset": 0,
+   "label": "normal",
+   "description": "",
+   "detected": false,
+   "first_alarm": null,
+   "delay_h": null,
+   "lead_to_end_h": null,
+   "false_alarms": 16,
+   "pre_event_alarms": 0,
+   "diagnosis": "Transformer",
+   "diagnosis_correct": null,
+   "params": {
+    "lam": 0.1,
+    "L": 1,
+    "k": 1.0,
+    "h": 40.0,
+    "persist": 1,
+    "cooldown": 1,
+    "clear": 1.0,
+    "use_ewma": true,
+    "use_cusum": false,
+    "watch": 0.7,
+    "fault_mult": 4,
+    "cusum_cap": 0.0,
+    "combine": "or"
+   },
+   "diagnosis_detail": {
+    "top_component": "Transformer",
+    "shares": {
+     "Gearbox": 0.124,
+     "Generator bearings": 0.09,
+     "Generator windings": 0.044,
+     "Transformer": 0.31,
+     "Hydraulic group": 0.0,
+     "Hub / pitch": 0.001,
+     "Converter": 0.0,
+     "Nacelle cabinets": 0.133,
+     "Electrical balance": 0.095,
+     "Power performance": 0.203
+    },
+    "reasons": [],
+    "evidence": [
+     {
+      "signal": "sensor_38_avg",
+      "label": "HV transformer L1 temp",
+      "component": "Transformer",
+      "observed": null,
+      "expected": null,
+      "z": 3.305,
+      "contribution": 0.218
+     },
+     {
+      "signal": "sensor_39_avg",
+      "label": "HV transformer L2 temp",
+      "component": "Transformer",
+      "observed": null,
+      "expected": null,
+      "z": 2.965,
+      "contribution": 0.195
+     },
+     {
+      "signal": "power_30_avg",
+      "label": "Grid power",
+      "component": "Power performance",
+      "observed": null,
+      "expected": null,
+      "z": 1.544,
+      "contribution": 0.102
+     },
+     {
+      "signal": "gen_bearing_diff",
+      "label": "Gen. bearing DE \u2212 NDE",
+      "component": "Generator bearings",
+      "observed": null,
+      "expected": null,
+      "z": -0.965,
+      "contribution": 0.064
+     }
+    ]
+   },
+   "care_parts": {
+    "f_beta": null,
+    "accuracy": 0.9097,
+    "weighted_score": null,
+    "max_criticality": 78,
+    "detected_care": true,
+    "tp": 0,
+    "fp": 245,
+    "fn": 0,
+    "tn": 2469
+   }
+  },
+  {
+   "id": 25,
+   "asset": 11,
+   "label": "normal",
+   "description": "",
+   "detected": false,
+   "first_alarm": null,
+   "delay_h": null,
+   "lead_to_end_h": null,
+   "false_alarms": 33,
+   "pre_event_alarms": 0,
+   "diagnosis": "Generator windings",
+   "diagnosis_correct": null,
+   "params": {
+    "lam": 0.2,
+    "L": 1,
+    "k": 1.0,
+    "h": 40.0,
+    "persist": 1,
+    "cooldown": 1,
+    "clear": 1.0,
+    "use_ewma": true,
+    "use_cusum": false,
+    "watch": 0.7,
+    "fault_mult": 4,
+    "cusum_cap": 0.0,
+    "combine": "or"
+   },
+   "diagnosis_detail": {
+    "top_component": "Generator windings",
+    "shares": {
+     "Gearbox": 0.088,
+     "Generator bearings": 0.045,
+     "Generator windings": 0.411,
+     "Transformer": 0.228,
+     "Hydraulic group": 0.099,
+     "Hub / pitch": 0.052,
+     "Converter": 0.025,
+     "Nacelle cabinets": 0.0,
+     "Electrical balance": 0.053,
+     "Power performance": 0.0
+    },
+    "reasons": [],
+    "evidence": [
+     {
+      "signal": "sensor_38_avg",
+      "label": "HV transformer L1 temp",
+      "component": "Transformer",
+      "observed": null,
+      "expected": null,
+      "z": 0.861,
+      "contribution": 0.099
+     },
+     {
+      "signal": "hydraulic_minus_nacelle",
+      "label": "Hydraulic oil \u2212 nacelle",
+      "component": "Hydraulic group",
+      "observed": null,
+      "expected": null,
+      "z": 0.766,
+      "contribution": 0.074
+     },
+     {
+      "signal": "gen_bearing_diff",
+      "label": "Gen. bearing DE \u2212 NDE",
+      "component": "Generator bearings",
+      "observed": null,
+      "expected": null,
+      "z": -0.628,
+      "contribution": 0.06
+     },
+     {
+      "signal": "sensor_40_avg",
+      "label": "HV transformer L3 temp",
+      "component": "Transformer",
+      "observed": null,
+      "expected": null,
+      "z": 0.538,
+      "contribution": 0.055
+     }
+    ]
+   },
+   "care_parts": {
+    "f_beta": null,
+    "accuracy": 0.9212,
+    "weighted_score": null,
+    "max_criticality": 80,
+    "detected_care": true,
+    "tp": 0,
+    "fp": 191,
+    "fn": 0,
+    "tn": 2232
+   }
+  },
+  {
+   "id": 26,
+   "asset": 0,
+   "label": "anomaly",
+   "description": "Hydraulic group",
+   "detected": true,
+   "first_alarm": "2023-10-16T13:20:00",
+   "delay_h": 99.0,
+   "lead_to_end_h": 69.0,
+   "false_alarms": 0,
+   "pre_event_alarms": 0,
+   "diagnosis": "Converter",
+   "diagnosis_correct": false,
+   "params": {
+    "lam": 0.1,
+    "L": 1,
+    "k": 1.0,
+    "h": 40.0,
+    "persist": 1,
+    "cooldown": 1,
+    "clear": 1.0,
+    "use_ewma": true,
+    "use_cusum": false,
+    "watch": 0.7,
+    "fault_mult": 4,
+    "cusum_cap": 0.0,
+    "combine": "or"
+   },
+   "diagnosis_detail": {
+    "top_component": "Converter",
+    "shares": {
+     "Gearbox": 0.0,
+     "Generator bearings": 0.004,
+     "Generator windings": 0.0,
+     "Transformer": 0.081,
+     "Hydraulic group": 0.065,
+     "Hub / pitch": 0.1,
+     "Converter": 0.739,
+     "Nacelle cabinets": 0.0,
+     "Electrical balance": 0.0,
+     "Power performance": 0.012
+    },
+    "reasons": [],
+    "evidence": [
+     {
+      "signal": "pitch",
+      "label": "Pitch angle",
+      "component": "Hub / pitch",
+      "observed": null,
+      "expected": null,
+      "z": 0.313,
+      "contribution": 0.11
+     },
+     {
+      "signal": "hydraulic_minus_nacelle",
+      "label": "Hydraulic oil \u2212 nacelle",
+      "component": "Hydraulic group",
+      "observed": null,
+      "expected": null,
+      "z": 0.672,
+      "contribution": 0.09
+     },
+     {
+      "signal": "igbt_spread",
+      "label": "Rotor-side IGBT phase spread",
+      "component": "Converter",
+      "observed": null,
+      "expected": null,
+      "z": 0.514,
+      "contribution": 0.086
+     },
+     {
+      "signal": "sensor_35_avg",
+      "label": "Rotor-side IGBT L1 temp",
+      "component": "Converter",
+      "observed": null,
+      "expected": null,
+      "z": 0.025,
+      "contribution": 0.061
+     }
+    ]
+   },
+   "care_parts": {
+    "f_beta": 0.1117,
+    "accuracy": null,
+    "weighted_score": 0.0159,
+    "max_criticality": 11,
+    "detected_care": false,
+    "tp": 28,
+    "fp": 33,
+    "fn": 981,
+    "tn": 399
+   }
+  },
+  {
+   "id": 38,
+   "asset": 13,
+   "label": "normal",
+   "description": "",
+   "detected": false,
+   "first_alarm": null,
+   "delay_h": null,
+   "lead_to_end_h": null,
+   "false_alarms": 25,
+   "pre_event_alarms": 0,
+   "diagnosis": "Power performance",
+   "diagnosis_correct": null,
+   "params": {
+    "lam": 0.02,
+    "L": 1,
+    "k": 1.0,
+    "h": 40.0,
+    "persist": 1,
+    "cooldown": 1,
+    "clear": 1.0,
+    "use_ewma": true,
+    "use_cusum": false,
+    "watch": 0.7,
+    "fault_mult": 4,
+    "cusum_cap": 0.0,
+    "combine": "or"
+   },
+   "diagnosis_detail": {
+    "top_component": "Power performance",
+    "shares": {
+     "Gearbox": 0.01,
+     "Generator bearings": 0.056,
+     "Generator windings": 0.0,
+     "Transformer": 0.163,
+     "Hydraulic group": 0.022,
+     "Hub / pitch": 0.158,
+     "Converter": 0.192,
+     "Nacelle cabinets": 0.0,
+     "Electrical balance": 0.034,
+     "Power performance": 0.365
+    },
+    "reasons": [],
+    "evidence": [
+     {
+      "signal": "sensor_53_avg",
+      "label": "Nose cone temp",
+      "component": "Hub / pitch",
+      "observed": null,
+      "expected": null,
+      "z": 0.954,
+      "contribution": 0.129
+     },
+     {
+      "signal": "power_30_avg",
+      "label": "Grid power",
+      "component": "Power performance",
+      "observed": null,
+      "expected": null,
+      "z": 1.076,
+      "contribution": 0.093
+     },
+     {
+      "signal": "gen_bearing_diff",
+      "label": "Gen. bearing DE \u2212 NDE",
+      "component": "Generator bearings",
+      "observed": null,
+      "expected": null,
+      "z": -0.89,
+      "contribution": 0.076
+     },
+     {
+      "signal": "transformer_spread",
+      "label": "Transformer phase spread",
+      "component": "Transformer",
+      "observed": null,
+      "expected": null,
+      "z": 0.78,
+      "contribution": 0.069
+     }
+    ]
+   },
+   "care_parts": {
+    "f_beta": null,
+    "accuracy": 0.559,
+    "weighted_score": null,
+    "max_criticality": 385,
+    "detected_care": true,
+    "tp": 0,
+    "fp": 1122,
+    "fn": 0,
+    "tn": 1422
+   }
+  },
+  {
+   "id": 40,
+   "asset": 10,
+   "label": "anomaly",
+   "description": "Generator bearing failure",
+   "detected": true,
+   "first_alarm": "2022-12-26T15:10:00",
+   "delay_h": 15.2,
+   "lead_to_end_h": 741.8,
+   "false_alarms": 0,
+   "pre_event_alarms": 3,
+   "diagnosis": "Hub / pitch",
+   "diagnosis_correct": false,
+   "params": {
+    "lam": 0.02,
+    "L": 1,
+    "k": 1.0,
+    "h": 40.0,
+    "persist": 1,
+    "cooldown": 1,
+    "clear": 1.0,
+    "use_ewma": true,
+    "use_cusum": false,
+    "watch": 0.7,
+    "fault_mult": 4,
+    "cusum_cap": 0.0,
+    "combine": "or"
+   },
+   "diagnosis_detail": {
+    "top_component": "Hub / pitch",
+    "shares": {
+     "Gearbox": 0.071,
+     "Generator bearings": 0.181,
+     "Generator windings": 0.0,
+     "Transformer": 0.139,
+     "Hydraulic group": 0.0,
+     "Hub / pitch": 0.236,
+     "Converter": 0.054,
+     "Nacelle cabinets": 0.165,
+     "Electrical balance": 0.153,
+     "Power performance": 0.0
+    },
+    "reasons": [],
+    "evidence": [
+     {
+      "signal": "sensor_53_avg",
+      "label": "Nose cone temp",
+      "component": "Hub / pitch",
+      "observed": null,
+      "expected": null,
+      "z": 2.686,
+      "contribution": 0.136
+     },
+     {
+      "signal": "sensor_6_avg",
+      "label": "Hub controller temp",
+      "component": "Hub / pitch",
+      "observed": null,
+      "expected": null,
+      "z": 2.267,
+      "contribution": 0.117
+     },
+     {
+      "signal": "gen_bearing_diff",
+      "label": "Gen. bearing DE \u2212 NDE",
+      "component": "Generator bearings",
+      "observed": null,
+      "expected": null,
+      "z": 1.33,
+      "contribution": 0.067
+     },
+     {
+      "signal": "transformer_spread",
+      "label": "Transformer phase spread",
+      "component": "Transformer",
+      "observed": null,
+      "expected": null,
+      "z": 1.219,
+      "contribution": 0.064
+     }
+    ]
+   },
+   "care_parts": {
+    "f_beta": 0.6736,
+    "accuracy": null,
+    "weighted_score": 0.3294,
+    "max_criticality": 665,
+    "detected_care": true,
+    "tp": 1671,
+    "fp": 303,
+    "fn": 2837,
+    "tn": 128
+   }
+  },
+  {
+   "id": 42,
+   "asset": 10,
+   "label": "anomaly",
+   "description": "Hydraulic group",
+   "detected": true,
+   "first_alarm": "2023-09-10T00:30:00",
+   "delay_h": 8.7,
+   "lead_to_end_h": 159.3,
+   "false_alarms": 0,
+   "pre_event_alarms": 0,
+   "diagnosis": "Transformer",
+   "diagnosis_correct": false,
+   "params": {
+    "lam": 0.02,
+    "L": 1,
+    "k": 1.0,
+    "h": 40.0,
+    "persist": 1,
+    "cooldown": 1,
+    "clear": 1.0,
+    "use_ewma": true,
+    "use_cusum": false,
+    "watch": 0.7,
+    "fault_mult": 4,
+    "cusum_cap": 0.0,
+    "combine": "or"
+   },
+   "diagnosis_detail": {
+    "top_component": "Transformer",
+    "shares": {
+     "Gearbox": 0.101,
+     "Generator bearings": 0.128,
+     "Generator windings": 0.01,
+     "Transformer": 0.419,
+     "Hydraulic group": 0.0,
+     "Hub / pitch": 0.016,
+     "Converter": 0.155,
+     "Nacelle cabinets": 0.0,
+     "Electrical balance": 0.173,
+     "Power performance": 0.0
+    },
+    "reasons": [],
+    "evidence": [
+     {
+      "signal": "sensor_39_avg",
+      "label": "HV transformer L2 temp",
+      "component": "Transformer",
+      "observed": null,
+      "expected": null,
+      "z": 3.165,
+      "contribution": 0.171
+     },
+     {
+      "signal": "sensor_40_avg",
+      "label": "HV transformer L3 temp",
+      "component": "Transformer",
+      "observed": null,
+      "expected": null,
+      "z": 2.948,
+      "contribution": 0.159
+     },
+     {
+      "signal": "sensor_38_avg",
+      "label": "HV transformer L1 temp",
+      "component": "Transformer",
+      "observed": null,
+      "expected": null,
+      "z": 2.873,
+      "contribution": 0.155
+     },
+     {
+      "signal": "current_imbalance",
+      "label": "Phase current imbalance",
+      "component": "Electrical balance",
+      "observed": null,
+      "expected": null,
+      "z": 0.993,
+      "contribution": 0.054
+     }
+    ]
+   },
+   "care_parts": {
+    "f_beta": 0.6468,
+    "accuracy": null,
+    "weighted_score": 0.2923,
+    "max_criticality": 132,
+    "detected_care": true,
+    "tp": 286,
+    "fp": 15,
+    "fn": 721,
+    "tn": 561
+   }
+  },
+  {
+   "id": 45,
+   "asset": 13,
+   "label": "anomaly",
+   "description": "Hydraulic group",
+   "detected": true,
+   "first_alarm": "2023-04-19T23:00:00",
+   "delay_h": 4.8,
+   "lead_to_end_h": 163.2,
+   "false_alarms": 0,
+   "pre_event_alarms": 1,
+   "diagnosis": "Unknown \u2014 insufficient evidence",
+   "diagnosis_correct": false,
+   "params": {
+    "lam": 0.02,
+    "L": 1,
+    "k": 1.0,
+    "h": 40.0,
+    "persist": 1,
+    "cooldown": 1,
+    "clear": 1.0,
+    "use_ewma": true,
+    "use_cusum": false,
+    "watch": 0.7,
+    "fault_mult": 4,
+    "cusum_cap": 0.0,
+    "combine": "or"
+   },
+   "diagnosis_detail": {
+    "top_component": "Transformer",
+    "shares": {
+     "Gearbox": 0.082,
+     "Generator bearings": 0.055,
+     "Generator windings": 0.169,
+     "Transformer": 0.228,
+     "Hydraulic group": 0.035,
+     "Hub / pitch": 0.04,
+     "Converter": 0.117,
+     "Nacelle cabinets": 0.218,
+     "Electrical balance": 0.005,
+     "Power performance": 0.052
+    },
+    "reasons": [
+     "runner-up too close"
+    ],
+    "evidence": [
+     {
+      "signal": "sensor_39_avg",
+      "label": "HV transformer L2 temp",
+      "component": "Transformer",
+      "observed": null,
+      "expected": null,
+      "z": 1.868,
+      "contribution": 0.111
+     },
+     {
+      "signal": "sensor_40_avg",
+      "label": "HV transformer L3 temp",
+      "component": "Transformer",
+      "observed": null,
+      "expected": null,
+      "z": 1.569,
+      "contribution": 0.093
+     },
+     {
+      "signal": "sensor_8_avg",
+      "label": "Choke coils temp (VCS)",
+      "component": "Nacelle cabinets",
+      "observed": null,
+      "expected": null,
+      "z": 1.368,
+      "contribution": 0.081
+     },
+     {
+      "signal": "gbx_bearing_minus_oil",
+      "label": "Gearbox bearing \u2212 oil",
+      "component": "Gearbox",
+      "observed": null,
+      "expected": null,
+      "z": 1.23,
+      "contribution": 0.08
+     }
+    ]
+   },
+   "care_parts": {
+    "f_beta": 0.8802,
+    "accuracy": null,
+    "weighted_score": 0.7647,
+    "max_criticality": 501,
+    "detected_care": true,
+    "tp": 607,
+    "fp": 3,
+    "fn": 401,
+    "tn": 429
+   }
+  },
+  {
+   "id": 51,
+   "asset": 21,
+   "label": "anomaly",
+   "description": "Gearbox bearings damaged",
+   "detected": true,
+   "first_alarm": "2023-10-06T01:30:00",
+   "delay_h": 0.0,
+   "lead_to_end_h": 278.7,
+   "false_alarms": 0,
+   "pre_event_alarms": 10,
+   "diagnosis": "Hydraulic group",
+   "diagnosis_correct": false,
+   "params": {
+    "lam": 0.2,
+    "L": 1,
+    "k": 1.0,
+    "h": 40.0,
+    "persist": 1,
+    "cooldown": 1,
+    "clear": 1.0,
+    "use_ewma": true,
+    "use_cusum": false,
+    "watch": 0.7,
+    "fault_mult": 4,
+    "cusum_cap": 0.0,
+    "combine": "or"
+   },
+   "diagnosis_detail": {
+    "top_component": "Hydraulic group",
+    "shares": {
+     "Gearbox": 0.124,
+     "Generator bearings": 0.019,
+     "Generator windings": 0.192,
+     "Transformer": 0.178,
+     "Hydraulic group": 0.28,
+     "Hub / pitch": 0.067,
+     "Converter": 0.053,
+     "Nacelle cabinets": 0.02,
+     "Electrical balance": 0.023,
+     "Power performance": 0.044
+    },
+    "reasons": [],
+    "evidence": [
+     {
+      "signal": "hydraulic_minus_nacelle",
+      "label": "Hydraulic oil \u2212 nacelle",
+      "component": "Hydraulic group",
+      "observed": null,
+      "expected": null,
+      "z": 1.615,
+      "contribution": 0.114
+     },
+     {
+      "signal": "sensor_41_avg",
+      "label": "Hydraulic oil temp",
+      "component": "Hydraulic group",
+      "observed": null,
+      "expected": null,
+      "z": 0.816,
+      "contribution": 0.071
+     },
+     {
+      "signal": "pitch",
+      "label": "Pitch angle",
+      "component": "Hub / pitch",
+      "observed": null,
+      "expected": null,
+      "z": -0.876,
+      "contribution": 0.068
+     },
+     {
+      "signal": "gen_bearing_diff",
+      "label": "Gen. bearing DE \u2212 NDE",
+      "component": "Generator bearings",
+      "observed": null,
+      "expected": null,
+      "z": -0.94,
+      "contribution": 0.063
+     }
+    ]
+   },
+   "care_parts": {
+    "f_beta": 0.3545,
+    "accuracy": null,
+    "weighted_score": 0.1137,
+    "max_criticality": 26,
+    "detected_care": false,
+    "tp": 217,
+    "fp": 130,
+    "fn": 1456,
+    "tn": 590
+   }
+  },
+  {
+   "id": 68,
+   "asset": 11,
+   "label": "anomaly",
+   "description": "Transformer failure",
+   "detected": true,
+   "first_alarm": "2023-07-28T13:20:00",
+   "delay_h": 0.0,
+   "lead_to_end_h": 335.8,
+   "false_alarms": 0,
+   "pre_event_alarms": 0,
+   "diagnosis": "Hydraulic group",
+   "diagnosis_correct": false,
+   "params": {
+    "lam": 0.2,
+    "L": 1,
+    "k": 1.0,
+    "h": 40.0,
+    "persist": 1,
+    "cooldown": 1,
+    "clear": 1.0,
+    "use_ewma": true,
+    "use_cusum": false,
+    "watch": 0.7,
+    "fault_mult": 4,
+    "cusum_cap": 0.0,
+    "combine": "or"
+   },
+   "diagnosis_detail": {
+    "top_component": "Hydraulic group",
+    "shares": {
+     "Gearbox": 0.141,
+     "Generator bearings": 0.056,
+     "Generator windings": 0.147,
+     "Transformer": 0.094,
+     "Hydraulic group": 0.295,
+     "Hub / pitch": 0.053,
+     "Converter": 0.013,
+     "Nacelle cabinets": 0.185,
+     "Electrical balance": 0.0,
+     "Power performance": 0.016
+    },
+    "reasons": [],
+    "evidence": [
+     {
+      "signal": "pitch",
+      "label": "Pitch angle",
+      "component": "Hub / pitch",
+      "observed": null,
+      "expected": null,
+      "z": 1.294,
+      "contribution": 0.175
+     },
+     {
+      "signal": "sensor_41_avg",
+      "label": "Hydraulic oil temp",
+      "component": "Hydraulic group",
+      "observed": null,
+      "expected": null,
+      "z": 2.517,
+      "contribution": 0.109
+     },
+     {
+      "signal": "sensor_19_avg",
+      "label": "Split ring chamber temp",
+      "component": "Nacelle cabinets",
+      "observed": null,
+      "expected": null,
+      "z": 1.803,
+      "contribution": 0.08
+     },
+     {
+      "signal": "hydraulic_minus_nacelle",
+      "label": "Hydraulic oil \u2212 nacelle",
+      "component": "Hydraulic group",
+      "observed": null,
+      "expected": null,
+      "z": 1.696,
+      "contribution": 0.074
+     }
+    ]
+   },
+   "care_parts": {
+    "f_beta": 0.3768,
+    "accuracy": null,
+    "weighted_score": 0.115,
+    "max_criticality": 41,
+    "detected_care": false,
+    "tp": 266,
+    "fp": 113,
+    "fn": 1748,
+    "tn": 168
+   }
+  },
+  {
+   "id": 69,
+   "asset": 11,
+   "label": "normal",
+   "description": "",
+   "detected": false,
+   "first_alarm": null,
+   "delay_h": null,
+   "lead_to_end_h": null,
+   "false_alarms": 18,
+   "pre_event_alarms": 0,
+   "diagnosis": "Electrical balance",
+   "diagnosis_correct": null,
+   "params": {
+    "lam": 0.2,
+    "L": 1,
+    "k": 1.0,
+    "h": 40.0,
+    "persist": 1,
+    "cooldown": 1,
+    "clear": 1.0,
+    "use_ewma": true,
+    "use_cusum": false,
+    "watch": 0.7,
+    "fault_mult": 4,
+    "cusum_cap": 0.0,
+    "combine": "or"
+   },
+   "diagnosis_detail": {
+    "top_component": "Electrical balance",
+    "shares": {
+     "Gearbox": 0.102,
+     "Generator bearings": 0.038,
+     "Generator windings": 0.0,
+     "Transformer": 0.226,
+     "Hydraulic group": 0.16,
+     "Hub / pitch": 0.088,
+     "Converter": 0.0,
+     "Nacelle cabinets": 0.0,
+     "Electrical balance": 0.387,
+     "Power performance": 0.0
+    },
+    "reasons": [],
+    "evidence": [
+     {
+      "signal": "current_imbalance",
+      "label": "Phase current imbalance",
+      "component": "Electrical balance",
+      "observed": null,
+      "expected": null,
+      "z": 2.373,
+      "contribution": 0.143
+     },
+     {
+      "signal": "transformer_spread",
+      "label": "Transformer phase spread",
+      "component": "Transformer",
+      "observed": null,
+      "expected": null,
+      "z": 2.104,
+      "contribution": 0.122
+     },
+     {
+      "signal": "hydraulic_minus_nacelle",
+      "label": "Hydraulic oil \u2212 nacelle",
+      "component": "Hydraulic group",
+      "observed": null,
+      "expected": null,
+      "z": 1.098,
+      "contribution": 0.063
+     },
+     {
+      "signal": "sensor_37_avg",
+      "label": "Rotor-side IGBT L3 temp",
+      "component": "Converter",
+      "observed": null,
+      "expected": null,
+      "z": 0.136,
+      "contribution": 0.046
+     }
+    ]
+   },
+   "care_parts": {
+    "f_beta": null,
+    "accuracy": 0.8758,
+    "weighted_score": null,
+    "max_criticality": 85,
+    "detected_care": true,
+    "tp": 0,
+    "fp": 322,
+    "fn": 0,
+    "tn": 2271
+   }
+  },
+  {
+   "id": 71,
+   "asset": 0,
+   "label": "normal",
+   "description": "",
+   "detected": false,
+   "first_alarm": null,
+   "delay_h": null,
+   "lead_to_end_h": null,
+   "false_alarms": 37,
+   "pre_event_alarms": 0,
+   "diagnosis": "Nacelle cabinets",
+   "diagnosis_correct": null,
+   "params": {
+    "lam": 0.1,
+    "L": 1,
+    "k": 1.0,
+    "h": 40.0,
+    "persist": 1,
+    "cooldown": 1,
+    "clear": 1.0,
+    "use_ewma": true,
+    "use_cusum": false,
+    "watch": 0.7,
+    "fault_mult": 4,
+    "cusum_cap": 0.0,
+    "combine": "or"
+   },
+   "diagnosis_detail": {
+    "top_component": "Nacelle cabinets",
+    "shares": {
+     "Gearbox": 0.009,
+     "Generator bearings": 0.047,
+     "Generator windings": 0.0,
+     "Transformer": 0.0,
+     "Hydraulic group": 0.0,
+     "Hub / pitch": 0.092,
+     "Converter": 0.077,
+     "Nacelle cabinets": 0.521,
+     "Electrical balance": 0.254,
+     "Power performance": 0.0
+    },
+    "reasons": [],
+    "evidence": [
+     {
+      "signal": "sensor_20_avg",
+      "label": "Busbar temp",
+      "component": "Nacelle cabinets",
+      "observed": null,
+      "expected": null,
+      "z": 0.135,
+      "contribution": 0.08
+     },
+     {
+      "signal": "sensor_37_avg",
+      "label": "Rotor-side IGBT L3 temp",
+      "component": "Converter",
+      "observed": null,
+      "expected": null,
+      "z": 0.785,
+      "contribution": 0.071
+     },
+     {
+      "signal": "sensor_10_avg",
+      "label": "VCS cooling water temp",
+      "component": "Converter",
+      "observed": null,
+      "expected": null,
+      "z": 0.747,
+      "contribution": 0.071
+     },
+     {
+      "signal": "current_imbalance",
+      "label": "Phase current imbalance",
+      "component": "Electrical balance",
+      "observed": null,
+      "expected": null,
+      "z": 0.806,
+      "contribution": 0.069
+     }
+    ]
+   },
+   "care_parts": {
+    "f_beta": null,
+    "accuracy": 0.6827,
+    "weighted_score": null,
+    "max_criticality": 197,
+    "detected_care": true,
+    "tp": 0,
+    "fp": 777,
+    "fn": 0,
+    "tn": 1672
+   }
+  },
+  {
+   "id": 72,
+   "asset": 21,
+   "label": "anomaly",
+   "description": "Gearbox failure",
+   "detected": true,
+   "first_alarm": "2023-10-12T01:30:00",
+   "delay_h": 40.8,
+   "lead_to_end_h": 127.2,
+   "false_alarms": 0,
+   "pre_event_alarms": 9,
+   "diagnosis": "Transformer",
+   "diagnosis_correct": false,
+   "params": {
+    "lam": 0.2,
+    "L": 1,
+    "k": 1.0,
+    "h": 40.0,
+    "persist": 1,
+    "cooldown": 1,
+    "clear": 1.0,
+    "use_ewma": true,
+    "use_cusum": false,
+    "watch": 0.7,
+    "fault_mult": 4,
+    "cusum_cap": 0.0,
+    "combine": "or"
+   },
+   "diagnosis_detail": {
+    "top_component": "Transformer",
+    "shares": {
+     "Gearbox": 0.154,
+     "Generator bearings": 0.006,
+     "Generator windings": 0.127,
+     "Transformer": 0.287,
+     "Hydraulic group": 0.043,
+     "Hub / pitch": 0.091,
+     "Converter": 0.108,
+     "Nacelle cabinets": 0.136,
+     "Electrical balance": 0.0,
+     "Power performance": 0.049
+    },
+    "reasons": [],
+    "evidence": [
+     {
+      "signal": "gbx_bearing_minus_oil",
+      "label": "Gearbox bearing \u2212 oil",
+      "component": "Gearbox",
+      "observed": null,
+      "expected": null,
+      "z": 0.815,
+      "contribution": 0.08
+     },
+     {
+      "signal": "sensor_38_avg",
+      "label": "HV transformer L1 temp",
+      "component": "Transformer",
+      "observed": null,
+      "expected": null,
+      "z": 0.72,
+      "contribution": 0.074
+     },
+     {
+      "signal": "sensor_39_avg",
+      "label": "HV transformer L2 temp",
+      "component": "Transformer",
+      "observed": null,
+      "expected": null,
+      "z": 0.692,
+      "contribution": 0.063
+     },
+     {
+      "signal": "sensor_40_avg",
+      "label": "HV transformer L3 temp",
+      "component": "Transformer",
+      "observed": null,
+      "expected": null,
+      "z": 0.487,
+      "contribution": 0.056
+     }
+    ]
+   },
+   "care_parts": {
+    "f_beta": 0.2868,
+    "accuracy": null,
+    "weighted_score": 0.1067,
+    "max_criticality": 24,
+    "detected_care": false,
+    "tp": 132,
+    "fp": 191,
+    "fn": 877,
+    "tn": 817
+   }
+  },
+  {
+   "id": 73,
+   "asset": 0,
+   "label": "anomaly",
+   "description": "Hydraulic group",
+   "detected": true,
+   "first_alarm": "2023-06-10T18:30:00",
+   "delay_h": 6.8,
+   "lead_to_end_h": 161.2,
+   "false_alarms": 0,
+   "pre_event_alarms": 7,
+   "diagnosis": "Nacelle cabinets",
+   "diagnosis_correct": false,
+   "params": {
+    "lam": 0.1,
+    "L": 1,
+    "k": 1.0,
+    "h": 40.0,
+    "persist": 1,
+    "cooldown": 1,
+    "clear": 1.0,
+    "use_ewma": true,
+    "use_cusum": false,
+    "watch": 0.7,
+    "fault_mult": 4,
+    "cusum_cap": 0.0,
+    "combine": "or"
+   },
+   "diagnosis_detail": {
+    "top_component": "Nacelle cabinets",
+    "shares": {
+     "Gearbox": 0.162,
+     "Generator bearings": 0.125,
+     "Generator windings": 0.0,
+     "Transformer": 0.011,
+     "Hydraulic group": 0.048,
+     "Hub / pitch": 0.088,
+     "Converter": 0.0,
+     "Nacelle cabinets": 0.55,
+     "Electrical balance": 0.017,
+     "Power performance": 0.0
+    },
+    "reasons": [],
+    "evidence": [
+     {
+      "signal": "sensor_19_avg",
+      "label": "Split ring chamber temp",
+      "component": "Nacelle cabinets",
+      "observed": null,
+      "expected": null,
+      "z": 1.378,
+      "contribution": 0.13
+     },
+     {
+      "signal": "sensor_9_avg",
+      "label": "VCP-board temp",
+      "component": "Nacelle cabinets",
+      "observed": null,
+      "expected": null,
+      "z": 0.924,
+      "contribution": 0.088
+     },
+     {
+      "signal": "sensor_20_avg",
+      "label": "Busbar temp",
+      "component": "Nacelle cabinets",
+      "observed": null,
+      "expected": null,
+      "z": 0.864,
+      "contribution": 0.083
+     },
+     {
+      "signal": "gen_bearing_diff",
+      "label": "Gen. bearing DE \u2212 NDE",
+      "component": "Generator bearings",
+      "observed": null,
+      "expected": null,
+      "z": -0.585,
+      "contribution": 0.069
+     }
+    ]
+   },
+   "care_parts": {
+    "f_beta": 0.4192,
+    "accuracy": null,
+    "weighted_score": 0.2849,
+    "max_criticality": 130,
+    "detected_care": true,
+    "tp": 314,
+    "fp": 370,
+    "fn": 695,
+    "tn": 350
+   }
+  },
+  {
+   "id": 84,
+   "asset": 13,
+   "label": "anomaly",
+   "description": "Hydraulic group",
+   "detected": true,
+   "first_alarm": "2023-09-06T05:50:00",
+   "delay_h": 14.3,
+   "lead_to_end_h": 153.7,
+   "false_alarms": 0,
+   "pre_event_alarms": 4,
+   "diagnosis": "Generator bearings",
+   "diagnosis_correct": false,
+   "params": {
+    "lam": 0.02,
+    "L": 1,
+    "k": 1.0,
+    "h": 40.0,
+    "persist": 1,
+    "cooldown": 1,
+    "clear": 1.0,
+    "use_ewma": true,
+    "use_cusum": false,
+    "watch": 0.7,
+    "fault_mult": 4,
+    "cusum_cap": 0.0,
+    "combine": "or"
+   },
+   "diagnosis_detail": {
+    "top_component": "Generator bearings",
+    "shares": {
+     "Gearbox": 0.0,
+     "Generator bearings": 0.41,
+     "Generator windings": 0.0,
+     "Transformer": 0.142,
+     "Hydraulic group": 0.0,
+     "Hub / pitch": 0.013,
+     "Converter": 0.19,
+     "Nacelle cabinets": 0.16,
+     "Electrical balance": 0.085,
+     "Power performance": 0.0
+    },
+    "reasons": [],
+    "evidence": [
+     {
+      "signal": "gen_bearing_diff",
+      "label": "Gen. bearing DE \u2212 NDE",
+      "component": "Generator bearings",
+      "observed": null,
+      "expected": null,
+      "z": 2.565,
+      "contribution": 0.17
+     },
+     {
+      "signal": "sensor_13_avg",
+      "label": "Gen. bearing DE temp",
+      "component": "Generator bearings",
+      "observed": null,
+      "expected": null,
+      "z": 1.759,
+      "contribution": 0.118
+     },
+     {
+      "signal": "sensor_7_avg",
+      "label": "Top nacelle controller temp",
+      "component": "Nacelle cabinets",
+      "observed": null,
+      "expected": null,
+      "z": 0.423,
+      "contribution": 0.044
+     },
+     {
+      "signal": "sensor_8_avg",
+      "label": "Choke coils temp (VCS)",
+      "component": "Nacelle cabinets",
+      "observed": null,
+      "expected": null,
+      "z": 0.137,
+      "contribution": 0.043
+     }
+    ]
+   },
+   "care_parts": {
+    "f_beta": 0.404,
+    "accuracy": null,
+    "weighted_score": 0.2495,
+    "max_criticality": 106,
+    "detected_care": true,
+    "tp": 204,
+    "fp": 176,
+    "fn": 801,
+    "tn": 256
+   }
+  },
+  {
+   "id": 92,
+   "asset": 11,
+   "label": "normal",
+   "description": "",
+   "detected": false,
+   "first_alarm": null,
+   "delay_h": null,
+   "lead_to_end_h": null,
+   "false_alarms": 45,
+   "pre_event_alarms": 0,
+   "diagnosis": "Unknown \u2014 insufficient evidence",
+   "diagnosis_correct": null,
+   "params": {
+    "lam": 0.2,
+    "L": 1,
+    "k": 1.0,
+    "h": 40.0,
+    "persist": 1,
+    "cooldown": 1,
+    "clear": 1.0,
+    "use_ewma": true,
+    "use_cusum": false,
+    "watch": 0.7,
+    "fault_mult": 4,
+    "cusum_cap": 0.0,
+    "combine": "or"
+   },
+   "diagnosis_detail": {
+    "top_component": "Gearbox",
+    "shares": {
+     "Gearbox": 0.321,
+     "Generator bearings": 0.109,
+     "Generator windings": 0.094,
+     "Transformer": 0.059,
+     "Hydraulic group": 0.059,
+     "Hub / pitch": 0.019,
+     "Converter": 0.026,
+     "Nacelle cabinets": 0.025,
+     "Electrical balance": 0.0,
+     "Power performance": 0.288
+    },
+    "reasons": [
+     "runner-up too close"
+    ],
+    "evidence": [
+     {
+      "signal": "sensor_13_avg",
+      "label": "Gen. bearing DE temp",
+      "component": "Generator bearings",
+      "observed": null,
+      "expected": null,
+      "z": 1.511,
+      "contribution": 0.11
+     },
+     {
+      "signal": "power_30_avg",
+      "label": "Grid power",
+      "component": "Power performance",
+      "observed": null,
+      "expected": null,
+      "z": 1.393,
+      "contribution": 0.108
+     },
+     {
+      "signal": "sensor_14_avg",
+      "label": "Gen. bearing NDE temp",
+      "component": "Generator bearings",
+      "observed": null,
+      "expected": null,
+      "z": 1.176,
+      "contribution": 0.086
+     },
+     {
+      "signal": "gbx_bearing_minus_oil",
+      "label": "Gearbox bearing \u2212 oil",
+      "component": "Gearbox",
+      "observed": null,
+      "expected": null,
+      "z": 0.621,
+      "contribution": 0.083
+     }
+    ]
+   },
+   "care_parts": {
+    "f_beta": null,
+    "accuracy": 0.8422,
+    "weighted_score": null,
+    "max_criticality": 35,
+    "detected_care": false,
+    "tp": 0,
+    "fp": 280,
+    "fn": 0,
+    "tn": 1494
+   }
+  }
+ ],
+ "confusion": {
+  "labels": [
+   "Gearbox",
+   "Generator bearings",
+   "Generator windings",
+   "Transformer",
+   "Hydraulic group",
+   "Hub / pitch",
+   "Converter",
+   "Nacelle cabinets",
+   "Electrical balance",
+   "Power performance",
+   "normal",
+   "Unknown",
+   "missed"
+  ],
+  "matrix": [
+   [
+    0,
+    1,
+    0,
+    1,
+    1,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    1,
+    0,
+    0,
+    1,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    1,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    1,
+    0,
+    1,
+    0,
+    0,
+    1,
+    1,
+    0,
+    1,
+    0,
+    1,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    1,
+    2,
+    1,
+    0,
+    1,
+    0,
+    1,
+    2,
+    1,
+    0,
+    1,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ]
+  ],
+  "note": "rows = logged fault class, columns = diagnosis at first alarm; 'missed' = no alarm in the event window; for normal datasets 'normal' = no false alarm, otherwise the false alarm's diagnosis"
+ },
+ "component_metrics": {
+  "Gearbox": {
+   "events": 3,
+   "correct": 0,
+   "predicted": 0,
+   "recall": 0.0,
+   "precision": null
+  },
+  "Generator bearings": {
+   "events": 2,
+   "correct": 0,
+   "predicted": 2,
+   "recall": 0.0,
+   "precision": 0.0
+  },
+  "Hydraulic group": {
+   "events": 6,
+   "correct": 0,
+   "predicted": 2,
+   "recall": 0.0,
+   "precision": 0.0
+  },
+  "Transformer": {
+   "events": 1,
+   "correct": 0,
+   "predicted": 2,
+   "recall": 0.0,
+   "precision": 0.0
+  }
+ },
+ "fold_params": {
+  "0": {
+   "lam": 0.1,
+   "L": 1,
+   "k": 1.0,
+   "h": 40.0,
+   "persist": 1,
+   "cooldown": 1,
+   "clear": 1.0,
+   "use_ewma": true,
+   "use_cusum": false,
+   "watch": 0.7,
+   "fault_mult": 4,
+   "cusum_cap": 0.0,
+   "combine": "or"
+  },
+  "10": {
+   "lam": 0.02,
+   "L": 1,
+   "k": 1.0,
+   "h": 40.0,
+   "persist": 1,
+   "cooldown": 1,
+   "clear": 1.0,
+   "use_ewma": true,
+   "use_cusum": false,
+   "watch": 0.7,
+   "fault_mult": 4,
+   "cusum_cap": 0.0,
+   "combine": "or"
+  },
+  "11": {
+   "lam": 0.2,
+   "L": 1,
+   "k": 1.0,
+   "h": 40.0,
+   "persist": 1,
+   "cooldown": 1,
+   "clear": 1.0,
+   "use_ewma": true,
+   "use_cusum": false,
+   "watch": 0.7,
+   "fault_mult": 4,
+   "cusum_cap": 0.0,
+   "combine": "or"
+  },
+  "13": {
+   "lam": 0.02,
+   "L": 1,
+   "k": 1.0,
+   "h": 40.0,
+   "persist": 1,
+   "cooldown": 1,
+   "clear": 1.0,
+   "use_ewma": true,
+   "use_cusum": false,
+   "watch": 0.7,
+   "fault_mult": 4,
+   "cusum_cap": 0.0,
+   "combine": "or"
+  },
+  "21": {
+   "lam": 0.2,
+   "L": 1,
+   "k": 1.0,
+   "h": 40.0,
+   "persist": 1,
+   "cooldown": 1,
+   "clear": 1.0,
+   "use_ewma": true,
+   "use_cusum": false,
+   "watch": 0.7,
+   "fault_mult": 4,
+   "cusum_cap": 0.0,
+   "combine": "or"
+  },
+  "global(all assets)": {
+   "lam": 0.2,
+   "L": 1,
+   "k": 1.0,
+   "h": 40.0,
+   "persist": 1,
+   "cooldown": 1,
+   "clear": 1.0,
+   "use_ewma": true,
+   "use_cusum": false,
+   "watch": 0.7,
+   "fault_mult": 4,
+   "cusum_cap": 0.0,
+   "combine": "or"
+  }
+ },
+ "summary": {
+  "id": "nbm_ewma",
+  "name": "NBM + normalized residual + EWMA",
+  "kind": "proposed",
+  "care": 0.5486,
+  "coverage": 0.4931,
+  "accuracy": 0.7536,
+  "reliability": 0.4861,
+  "earliness": 0.2566,
+  "events_detected": 12,
+  "events_total": 12,
+  "false_alarm_events": 280,
+  "normal_datasets": 10,
+  "fa_per_turbine_month": 47.09,
+  "normal_datasets_flagged": 10,
+  "pre_event_alarms": 40,
+  "delay_median_h": 7.8,
+  "delay_p90_h": 76.4,
+  "component_correct": 0,
+  "component_unknown": 1,
+  "care_events_detected": 7,
+  "care_normal_flagged": 8,
+  "normal_months": 5.95,
+  "diagnosed": 12,
+  "notes": "alarm params chosen leave-one-turbine-out (pooled held-out)"
+ }
+}

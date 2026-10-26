@@ -1,0 +1,6 @@
+,precision,recall,F1,support (rows)
+normal,0.631,0.998,0.773,20357
+hydraulic,0.565,0.006,0.012,4387
+gearbox,0.0,0.0,0.0,3252
+generator_bearing,1.0,0.0,0.001,3450
+transformer,0.0,0.0,0.0,829

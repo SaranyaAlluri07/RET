@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>WindTwin · Condition Monitoring</title>
+  <meta name="description" content="WindTwin: wind-farm condition-monitoring digital twin with explainable early fault alarms, historical replay and synthetic simulation.">
+  <script>
+    // Apply the persisted theme before first paint (no flash).
+    try { var t = localStorage.getItem('windtwin.theme'); if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t); } catch (e) {}
+  </script>
+  <link rel="stylesheet" href="./css/tokens.css">
+  <link rel="stylesheet" href="./css/app.css">
+  <script type="importmap">
+    { "imports": {
+        "three": "./vendor/three.module.js",
+        "three/addons/OrbitControls.js": "./vendor/OrbitControls.js"
+    } }
+  </script>
+  <script src="./vendor/echarts.min.js"></script>
+</head>
+<body>
+  <div class="shell">
+    <nav class="rail" id="rail" aria-label="Main navigation"></nav>
+    <header class="topbar" id="topbar"></header>
+    <div class="banner" id="banner" role="status" aria-live="polite"></div>
+    <main class="main" id="main"><div class="loading">Loading WindTwin…</div></main>
+  </div>
+  <div class="toasts" id="toasts" aria-live="polite"></div>
+  <script type="module" src="./app.js"></script>
+</body>
+</html>

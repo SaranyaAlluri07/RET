@@ -1,0 +1,6 @@
+,pred normal,pred hydraulic,pred gearbox,pred generator_bearing,pred transformer,pred other_component
+true normal,20357,0,0,0,0,0
+true hydraulic,4347,25,0,0,0,15
+true gearbox,3247,0,0,0,0,5
+true generator_bearing,3439,3,0,6,0,2
+true transformer,829,0,0,0,0,0

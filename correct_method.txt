@@ -1,0 +1,492 @@
+# Wind Farm Digital Twin: Research Review and Next-Step Roadmap
+
+My recommendation is to focus the next version on making fault detection genuinely reliable, not on adding more features or more complicated AI models.
+
+Your project already has a solid foundation: power forecasting, a five-turbine 3D simulation, anomaly injection, a results dashboard, energy-loss calculations, and a protection-trip demonstration. However, the manual exposes an important gap between demonstrating that the system works and proving that it can detect real turbine faults reliably.
+\
+I reviewed the manual alongside the CARE to Compare dataset documentation, its benchmark paper, research on residual-based fault detection, current wind-turbine research, and digital-twin development practices.
+
+## 1. What should be improved first?
+
+Power forecasting — retain and validate
+
+Your manual reports a Gradient Boosting model with \\(R^2=0.995\\), RMSE of 1.82% of rated power, and MAE of 1.15% of rated power. Its physics-based reference has \\(R^2=0.993\\) and RMSE of 2.12%. These are promising results, but the train/test methodology should be audited before the numbers are treated as generalizable performance.&#x20;
+
+USER_MANUAL.pdf
+
+
+
+Real-data fault detection — highest priority
+
+The current Random Forest detects 8 of 12 recorded faults, correctly identifies only 1 of the 12 fault types, and falsely flags 6 of 10 healthy datasets. An alternative detector-classifier combination finds more faults but has 8 false alarms among the 10 healthy datasets. This is a major reliability problem, not just a model-selection issue.&#x20;
+
+USER_MANUAL.pdf
+
+
+
+Synthetic fault testing — retain, but separate from validation
+
+The injected faults demonstrate how the simulator and detectors respond. The manual reports detection of 11 of 12 injected anomaly types under moderate or severe simulated conditions. However, the manual explicitly states that synthetic anomalies must not be used to claim real-data accuracy.&#x20;
+
+USER_MANUAL.pdf
+
+
+
+Digital-twin capabilities — make the distinction explicit
+
+The manual confirms that the live turbine data is simulated from models trained on real data; the application is not connected to an operational wind farm. That is completely acceptable for a research prototype, but a real-data replay interface and a clear simulation/real-data distinction would make the system considerably stronger.&#x20;
+
+USER_MANUAL.pdf
+
+
+
+The main strategic change: keep the forecasting model as a foundation, improve the fault-detection and alarm pipeline, then use the digital twin to demonstrate the improvement under reproducible tests.
+
+## 2. The research findings that matter most
+
+### Finding 1: Fault detection is not the same as fault classification
+
+These are two separate engineering problems.
+
+- Detection: Is the turbine behaving abnormally?
+- Diagnosis: Which component is likely affected?
+- Prognosis: How might the problem progress, and when might intervention be necessary?
+
+Your manual shows that the current classification models can detect some faults without identifying the correct component. It also reports that most fault types have very few recorded examples. With only 12 recorded faults across four classes, a sophisticated supervised classifier has limited evidence from which to learn generalizable fault signatures.&#x20;
+
+USER_MANUAL.pdf
+
+
+
+Recommendation: make reliable anomaly detection the first objective. Keep diagnosis as a second stage that reports the most likely component, the supporting evidence, and an explicit unknown or insufficient evidence outcome when confidence is low.
+
+### Finding 2: Your evaluation should measure operational reliability
+
+The CARE to Compare research introduced a benchmark for wind-turbine anomaly detection that considers four dimensions: Coverage, Accuracy, Reliability and Earliness. In practical terms, a useful detector should identify faults, recognize normal operation, avoid repeatedly raising false alarms, and detect faults early enough to be actionable. The benchmark contains SCADA data from 36 turbines across three wind farms and 89 years of operating data.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://arxiv.org\&sz=32)
+
+arXiv
+
++1
+
+
+
+This is especially relevant because the results in your manual illustrate the trade-off: detecting more fault windows can come at the cost of many more false alarms.
+
+The benchmark paper also demonstrates why choosing the detector with the highest fault count alone is not sufficient. Its reported autoencoder achieved a CARE score of 0.66 across the benchmark, compared with a random strategy score of 0.5. Those numbers are useful reference points, but they are not directly comparable to your current model until the dataset version, evaluation protocol and test scope are matched.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://arxiv.org\&sz=32)
+
+arXiv
+
+
+
+### Finding 3: Residual-based monitoring is a strong direction
+
+A normal-behaviour model estimates what a healthy turbine should do under particular operating conditions. Its residual is the difference between the observed value and the predicted healthy value.
+
+\\[ r_t=y_t-\hat{y}\_t \\]
+
+For example, if a gearbox temperature model predicts a healthy temperature of \\(64^\circ\text{C}\\), while the observed temperature is \\(71^\circ\text{C}\\), the residual is \\(+7^\circ\text{C}\\). The difference alone does not establish a fault, because load, ambient temperature, operating state and model error can also explain deviations. But persistent, unusual residuals can provide useful evidence.
+
+Recent research continues to investigate residual-based condition monitoring, including models that generalize across turbine fleets. Research published in July 2026 also illustrates a two-stage approach: estimate healthy generator temperatures, identify deviations, adapt a model to individual turbines, and explain which variables contributed to the prediction.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://onlinelibrary.wiley.com\&sz=32)
+
+Wiley Online Library
+
++1
+
+
+
+For your project, I would test this simpler, interpretable approach before moving to heavier deep-learning architectures.
+
+### Finding 4: Data quality and dataset versions must be controlled
+
+Your manual points to CARE to Compare record `14958989`, version 5. A newer version 6 is now available at the official Zenodo record. The newer version corrects sensor units in Wind Farm C and updates some event descriptions and date formatting. It is worth upgrading to the current version and pinning the exact version used for every experiment.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://zenodo.org\&sz=32)
+
+Zenodo
+
+USER_MANUAL.pdf
+
+
+
+The dataset documentation also warns that some minimum, maximum and standard-deviation measurements contain implausible values, pitch-angle data can be affected by angle wrapping, and certain offshore-farm signals have substantial data-quality issues. The authors generally consider the per-timestamp average signals more reliable for analysis.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://zenodo.org\&sz=32)
+
+Zenodo
+
+
+
+This matters because poor data can create apparent anomalies that are actually measurement artefacts.
+
+## 3. Recommended technical architecture
+
+I recommend restructuring the anomaly-detection pipeline into six distinct stages. You can preserve almost all the existing application and replace the weaker parts of the analysis layer incrementally.
+
+### 1. SCADA data input
+
+Historical data replay or simulated turbine data
+
+### 2. Data quality and operating-state checks
+
+Missing values, sensor faults, operating conditions, invalid readings
+
+Power forecasting
+
+Expected power and forecast uncertainty
+
+Normal-behaviour models
+
+Expected component temperatures and other signals
+
+### 3. Residual calculation and normalization
+
+Measure deviations relative to the expected behaviour and its normal variability
+
+### 4. Temporal anomaly detection
+
+Persistent deviation tests, EWMA / CUSUM and energy-performance monitoring
+
+### 5. Alarm and diagnosis layer
+
+Normal / warning / fault / unknown, likely component, evidence and confidence
+
+### 6. Digital twin and results dashboard
+
+3D state, fault timeline, lead time, false alarms and estimated energy loss
+
+### How I would improve each stage
+
+A. Replace isolated thresholds with normalized residuals.
+
+A residual of 5 degrees may be unusual for one turbine and normal for another, depending on load and operating conditions. Instead of using only a fixed threshold, estimate the normal distribution of residuals for different operating regimes.
+
+For example, you could calculate a standardized residual:
+
+\\[ z_t=\frac{y_t-\hat y_t}{\hat\sigma_t} \\]
+
+Here, \\(\hat\sigma_t\\) estimates the usual prediction error under comparable operating conditions. Large standardized residuals indicate more unusual behaviour relative to the appropriate baseline.
+
+Use training or validation data to estimate the expected variability. Do not estimate thresholds from the final test set.
+
+B. Add a temporal decision layer.
+
+Your current detector should not necessarily raise a full fault alarm every time a single reading deviates from the prediction.
+
+Test two established statistical monitoring methods:
+
+- EWMA — exponentially weighted moving average: smooths residuals over time so that sustained deviations become more visible.
+- CUSUM — cumulative sum: accumulates smaller deviations, helping to reveal persistent changes that might not trigger a simple threshold immediately.
+
+Compare these methods using the same held-out data. Research on wind-turbine monitoring continues to investigate the combination of normal-behaviour models and statistical monitoring because model residuals can contain spikes caused by normal changes in operating conditions.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://link.springer.com\&sz=32)
+
+Springer Nature Link
+
++1
+
+
+
+Add alarm persistence, hysteresis and a cooldown rule. These can reduce alarm chatter, but their parameters must be tuned carefully because excessive smoothing can delay detection.
+
+C. Separate detection from diagnosis.
+
+Use the outputs of the anomaly detector to determine whether a fault-like event is occurring. Then use component-specific residual patterns and existing engineering rules to rank plausible causes.
+
+For example, unusually high gearbox temperature together with a persistent gearbox-related residual might make a gearbox issue a leading hypothesis. It should not be called a confirmed gearbox fault solely because the residual is high.
+
+The dashboard should report:
+
+- Anomaly status and severity.
+- Likely affected component.
+- The sensor measurements or residuals supporting the conclusion.
+- Detection time and elapsed time since the deviation began.
+- Confidence, where that confidence has been calibrated.
+- An unknown or inconclusive diagnosis when the evidence is insufficient.
+
+This is particularly important for the four classes that currently have so few recorded fault examples.
+
+D. Keep the existing energy-performance monitor.
+
+The power forecast and energy-performance index can provide evidence of underperformance that is not necessarily reflected in one temperature sensor. Retain this capability, but distinguish unexplained production loss from a confirmed mechanical fault. Wind conditions, curtailment and other operating effects can also explain low output.
+
+## 4. The implementation roadmap
+
+The following is the order I would follow. Each stage produces an independently testable result, so you will not need to rebuild the entire application at once.
+
+## 01
+
+## Phase 1 — Audit and reproduce the existing results
+
+Highest priority
+
+Tasks
+
+1. Download and pin the latest official CARE to Compare dataset version, retaining the exact dataset DOI and version in your records.
+2. Document the features, units, missing values, sensor validity checks and fault labels.
+3. Re-run the present forecasting, Random Forest and residual-based detector evaluations.
+4. Verify that the test data are not used for feature selection, residual-threshold tuning, scaling or model training.
+5. Check that status and fault-logbook labels are used only for their intended training or evaluation roles, never as predictive inputs that reveal the answer.
+
+Your manual already states that status flags are excluded as predictive inputs to avoid artificially perfect results. Preserve that safeguard.&#x20;
+
+USER_MANUAL.pdf
+
+
+
+Deliverable: a reproducible baseline report, including the confusion matrices, event-level results and power-forecast metrics.
+
+Exit condition: other experiments can be compared against the same verified baseline and data split.
+
+## 02
+
+## Phase 2 — Build and benchmark the improved detector
+
+Core technical work
+
+Tasks
+
+Train and evaluate a small, deliberately selected set of alternatives:
+
+| Model or method                                       | Purpose                                 |
+| ----------------------------------------------------- | --------------------------------------- |
+| Existing Random Forest                                | Classification baseline                 |
+| Existing residual detector + energy monitor           | Current operational baseline            |
+| Gradient Boosting normal-behaviour model              | Predict healthy component behaviour     |
+| Normal-behaviour model + normalized residuals + EWMA  | Detect persistent deviations            |
+| Normal-behaviour model + normalized residuals + CUSUM | Detect sustained changes                |
+| Isolation Forest or autoencoder                       | Additional anomaly-detection comparison |
+
+Train normal-behaviour models using appropriate healthy training periods. Compare these against the current model using identical validation and test protocols.
+
+Start with Wind Farm A because it matches the current project. Extend to Farms B and C only after the differences in sensor definitions, units and data quality have been addressed. The farms do not have interchangeable feature sets.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://zenodo.org\&sz=32)
+
+Zenodo
+
++1
+
+
+
+Deliverable: a model-comparison table showing which model detects faults, which falsely raises alarms and how early it detects recorded events.
+
+Exit condition: select the detector that performs best under the chosen operational metrics, not the one with the highest raw number of detections.
+
+## 03
+
+## Phase 3 — Improve diagnosis and alarm quality
+
+Tasks
+
+Build a stateful alarm system on top of the selected detector. Add persistence rules, hysteresis, threshold calibration, a diagnosis layer and an explicit unknown state.
+
+Also create a data-driven explanation for every alarm. If several measurements jointly caused an alert, show those measurements and their residuals rather than displaying only a model-predicted fault class.
+
+Deliverable: a fault event record that contains the beginning of the detected event, alarm time, likely component, supporting measurements, severity and eventual resolution.
+
+Exit condition: the system can distinguish between a brief deviation, a sustained anomaly and a suspected component fault without treating them as the same thing.
+
+## 04
+
+## Phase 4 — Make the simulator a stronger test platform
+
+Tasks
+
+Expand the existing anomaly-injection engine, retaining its twelve scenarios while improving coverage of:
+
+- Sudden and gradual degradation.
+- Different loads and environmental conditions.
+- Temperature drift, sensor bias and increased noise.
+- Stuck, missing or implausible sensor signals.
+- Combined faults and realistic recovery behaviour.
+
+Do not treat these injected scenarios as real fault records. Use them for controlled stress tests and verification of the simulator, alarm logic and energy-loss calculations.
+
+Deliverable: a reproducible scenario library with configurable severity, onset, duration and random seed.
+
+Exit condition: every simulated scenario has a known ground truth, and its detection delay and resulting turbine state can be reproduced.
+
+## 05
+
+## Phase 5 — Upgrade the dashboard and research report
+
+Tasks
+
+Add a fault-event timeline, false-alarm statistics, component-level results, diagnostic explanations, sensor-quality indicators, forecast uncertainty and model-version information.
+
+Separate historical SCADA replay from synthetic simulation. A future live-telemetry mode should only be enabled after a real data connection is implemented.
+
+Deliverable: an application that can be demonstrated, evaluated and audited, supported by a complete experimental report.
+
+Exit condition: a reviewer can reproduce the results, understand why an alarm was raised and distinguish real-data evidence from simulated behaviour.
+
+## 5. How to prove that the next version is better
+
+This is the most important part of the improvement plan. You need a fixed protocol that makes model comparisons fair.
+
+### A. Evaluate the detector on real data
+
+| Metric                               | What it tells you                                                                   | Why it matters                                                         |
+| ------------------------------------ | ----------------------------------------------------------------------------------- | ---------------------------------------------------------------------- |
+| CARE score and component scores      | Overall coverage, recognition of healthy behaviour, alarm reliability and earliness | Main benchmark for early fault detection                               |
+| Event-level recall                   | Proportion of recorded fault events detected                                        | A turbine fault may span many consecutive SCADA samples                |
+| False-alarm events per turbine-month | How often the system raises alarms during healthy operation                         | Repeated false alarms make an otherwise sensitive detector impractical |
+| Detection lead time                  | Time between the recorded event onset and the first qualifying alarm                | Measures how early a warning is produced                               |
+| Component-level precision and recall | Whether the identified component is correct                                         | Measures diagnosis separately from detection                           |
+| Per-class confusion matrix           | Which fault types are being confused or missed                                      | Reveals weaknesses hidden by aggregate results                         |
+
+The CARE benchmark is especially suitable here because it explicitly accounts for detection coverage, normal behaviour, false alarms and earliness.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://arxiv.org\&sz=32)
+
+arXiv
+
+
+
+One caveat matters: the CARE paper states that the recorded onset time for Wind Farm A can differ from the true beginning of anomalous behaviour because its fault logbook gives fault start timestamps rather than perfect anomaly-onset labels. Treat reported lead times accordingly.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://arxiv.org\&sz=32)
+
+arXiv
+
+
+
+### B. Evaluate forecasting separately
+
+Preserve the existing power forecaster and assess it using MAE, RMSE and \\(R^2\\) on a properly held-out test set. Continue to compare it against the physics-based power curve. The IEC 61400-12-1 power-performance standard also emphasizes the assessment of uncertainty sources in measured power-performance results.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://webstore.iec.ch\&sz=32)
+
+IEC
+
+
+
+Add prediction intervals rather than relying on a single fixed 80% error band. Check whether the intervals achieve their intended coverage on unseen data, including different operating regimes. Do this only after the existing forecasting split has been audited.
+
+### C. Use realistic validation boundaries
+
+Run at least two evaluation protocols:
+
+1. Chronological evaluation: train on earlier data, tune on a subsequent validation period and evaluate on later held-out data.
+2. Turbine generalization evaluation: test on a turbine excluded from model training wherever the available data support that split.
+
+Fit all preprocessing, thresholds and model choices without using the final test results. Keep the final test set untouched until the design is selected.
+
+### D. Define success before running experiments
+
+I would use the following as initial engineering acceptance criteria, not as claims about the model's current performance:
+
+- The selected detector must improve on the existing baselines using the same test protocol.
+- Aim for at least a 25% reduction in false-alarm events at no worse event recall than the current detector. If this trade-off cannot be achieved, document the alternatives rather than hiding the missed faults.
+- Report median and 90th-percentile detection delay, not just the best early detection example.
+- Show component-level metrics separately and retain an unknown diagnosis option.
+- Report the sample/event counts alongside all percentages, given the small number of recorded faults.
+
+These targets should be revised if a particular alarm rate or detection delay is required for the intended maintenance use case.
+
+## 6. Improvements to the actual digital-twin experience
+
+There are some valuable application-level improvements, but I would implement them after the detector has been benchmarked.
+
+[fleetMONITOR by ONYX Insight | SoftwareOne Marketplace](https://images.openai.com/static-rsc-4/TM4AzEHRf8Kzwo531JtTJwxuBGxcCdjEZf-IouAAs8XxLhBnmcRy-ah3eKksgUErB0N7oAWKUvgjMXoH_7zBB0a04Q0o2dmXhidjLYzczudWH0eN30XNX2B2SkqkZD8ZeaaiW-1bmQlwdD5sqcKYL54cpM3joRE75_jZ6uiQ3Hw?purpose=inline)
+
+Live fault investigation panel
+
+Selecting a turbine should reveal the expected signal, measured signal, residual trend, alarm threshold, model confidence and the variables that explain the current alert. Display the first alarm and the evolution of the fault on one timeline.
+
+[Digital Mechanical Laboratory](https://images.openai.com/static-rsc-4/ey2RsBpfHuQ6nRhhTknFlFKveLzyBcFEAAqSG22UZRIU_-vofuXuoPy0LNfLrXtkW0n_opN_HsHfr2bo5733nb6Q_-ZysrybfqZrx0cmepGWB7AB2b6OwIWsL-kpRBIB4hIEgdQW_-RoOiAl3Glj51OouQk7i7Uf-tPQNKvKoN4?purpose=inline)
+
+Explicit operating modes
+
+Provide separate historical-data replay and synthetic-simulation modes. In both, the interface should show the data source and simulated timestamp. Reserve the label live telemetry for actual incoming turbine measurements.
+
+[Alternative Energy - Wind Farm - XMPro](https://images.openai.com/static-rsc-4/VMrxCnrEDFheq25TzVGsrcd0SuRLqI9dj1pDAbpFjfbh2etRG3NhZ6AnOQOjljVWrT8_sUCUO0QhZfA3dFgvfJ_ib0QAmMLdlh3CWV9oXHuUKx9eXO0qoDmwpYbXKCRSvqmge_kh8dxOlVM9I6df6m099yPDo_6sBdJfCPutneQ?purpose=inline)
+
+Decision-focused results dashboard
+
+Prioritize event detection, false alarms, detection lead time, energy loss and component-level results. Keep the existing energy and forecasting charts, but make it easy to compare the baseline and improved detectors under identical test conditions.
+
+There is also an important unit issue. Your manual says the dataset's power is scaled between 0 and 1, while MW and MWh are calculated using the rated power entered in the sidebar, defaulting to 2 MW. Make that distinction visible in the application: unless the rating is grounded in the actual asset, the physical units are illustrative model outputs, not measured farm capacity.&#x20;
+
+USER_MANUAL.pdf
+
+
+
+Longer term, a genuine operational digital twin would need an ongoing connection with the physical asset, synchronized data, model calibration and a feedback path. The current simulator remains a useful foundation, but adding a data connector alone would not establish that the model accurately represents a real turbine.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://link.springer.com\&sz=32)
+
+Springer Nature Link
+
+
+
+## 7. The strongest research direction for this project
+
+I would formulate the research question as follows:
+
+> Can a regime-aware normal-behaviour model, combined with normalized residuals and persistence-based alarm logic, improve early fault detection on the CARE to Compare dataset while reducing false alarms compared with the existing classification and residual-monitoring approaches?
+
+This is stronger than proposing simply to replace Random Forest with an LSTM, CNN or another classifier. It targets the project's actual weakness and produces a clear comparison that a reviewer can judge.
+
+### Proposed research design
+
+| Element                   | Proposed approach                                                                                            |
+| ------------------------- | ------------------------------------------------------------------------------------------------------------ |
+| Research gap              | The current classifier detects some faults but has poor component-level classification and many false alarms |
+| Proposed method           | Healthy-behaviour regression, operating-regime-aware residuals and EWMA/CUSUM alarm logic                    |
+| Baselines                 | Current Random Forest, current residual-energy detector, and selected standard anomaly detectors             |
+| Validation                | Version-controlled CARE to Compare data with chronological and turbine-level generalization tests            |
+| Primary assessment        | CARE score and its sub-scores                                                                                |
+| Secondary assessment      | Event recall, false alarms per turbine-month, detection delay, component diagnosis and model calibration     |
+| Digital-twin contribution | Reproducible fault injection and a visual timeline linking signals, alarms and turbine states                |
+
+The research literature already contains residual-based fault detection, normal-behaviour models and explainable approaches, so I would not claim that any one of those methods is novel by itself. The defensible contribution would be the rigorously evaluated combination of residual normalization, temporal alarm decisions and diagnosis, integrated into a reproducible digital-twin demonstrator.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://onlinelibrary.wiley.com\&sz=32)
+
+Wiley Online Library
+
++2
+
+
+
+## 8. What I would avoid doing right now
+
+I would not begin by training a large deep-learning classifier. Twelve recorded fault events are too little evidence to justify assuming that a more complicated architecture will generalize better.
+
+I would also avoid spending the next iteration primarily on a more elaborate 3D scene, adding many extra dashboard charts, or making the synthetic fault detection results look more impressive. Those activities may improve the demonstration, but they do not address the central research weakness.
+
+Most importantly, don't turn the current injected-fault demonstration into a claim that the model can reliably detect actual failures or guarantee a particular warning lead time.
+
+## Final priority order
+
+1\. Verify the data and reproduce existing metrics.
+
+Pin the dataset version, audit the evaluation splits and verify that the current numbers can be reproduced.
+
+2\. Improve the fault-detection pipeline.
+
+Test normal-behaviour models, normalized residuals, EWMA/CUSUM and calibrated alarm persistence against the current baselines.
+
+3\. Implement evidence-based diagnosis.
+
+Display likely causes and supporting sensor evidence, and allow an unknown diagnosis rather than forcing a potentially incorrect fault class.
+
+4\. Strengthen the digital-twin demonstration.
+
+Keep historical and synthetic testing distinct, make fault scenarios reproducible and connect the dashboard to event-based evaluation metrics.
+
+5\. Publish a clear experimental comparison.
+
+Report which improvement works, which trade-offs remain, and exactly how it was evaluated on held-out data.
+
+My overall assessment: this project does not need to start over. Its forecasting, simulator and visualization provide a strong foundation. The next version should concentrate on the gap between detecting an abnormal reading and producing a reliable, early and explainable fault alarm.
+
+The immediate next step is to audit the actual code and data-preparation pipeline against the manual's reported results. The manual gives enough evidence to prioritize the work, but inspecting the source code and evaluation outputs is necessary before deciding which individual implementation should be changed first.

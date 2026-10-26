@@ -1,0 +1,162 @@
+Rows (prediction periods, turbine running): 32,275 of 46,896   features: 175   CV groups: 21
+Rows per class: normal 20,357, hydraulic 4,387, generator_bearing 3,450, gearbox 3,252, transformer 829
+Events per class: hydraulic 6, gearbox 3, generator_bearing 2, transformer 1
+Overlapping datasets grouped together: [51, 72]
+      B fold group 0 done
+      B fold group 3 done
+      B fold group 10 done
+      B fold group 13 done
+      B fold group 14 done
+      B fold group 17 done
+      B fold group 22 done
+      B fold group 24 done
+      B fold group 25 done
+      B fold group 26 done
+      B fold group 38 done
+      B fold group 40 done
+      B fold group 42 done
+      B fold group 45 done
+      B fold group 68 done
+      B fold group 69 done
+      B fold group 71 done
+      B fold group 72 done
+      B fold group 73 done
+      B fold group 84 done
+      B fold group 92 done
+   B: done (21 folds)
+      C fold group 0 done
+      C fold group 3 done
+      C fold group 10 done
+      C fold group 13 done
+      C fold group 14 done
+      C fold group 17 done
+      C fold group 22 done
+      C fold group 24 done
+      C fold group 25 done
+      C fold group 26 done
+      C fold group 38 done
+      C fold group 40 done
+      C fold group 42 done
+      C fold group 45 done
+      C fold group 68 done
+      C fold group 69 done
+      C fold group 71 done
+      C fold group 72 done
+      C fold group 73 done
+      C fold group 84 done
+      C fold group 92 done
+   C: done (21 folds)
+      D fold group 0 done
+      D fold group 3 done
+      D fold group 10 done
+      D fold group 13 done
+      D fold group 14 done
+      D fold group 17 done
+      D fold group 22 done
+      D fold group 24 done
+      D fold group 25 done
+      D fold group 26 done
+      D fold group 38 done
+      D fold group 40 done
+      D fold group 42 done
+      D fold group 45 done
+      D fold group 68 done
+      D fold group 69 done
+      D fold group 71 done
+      D fold group 72 done
+      D fold group 73 done
+      D fold group 84 done
+      D fold group 92 done
+   D: done (21 folds)
+
+=== Before vs after (leave-one-group-out, out-of-fold, running rows) ===
+                                    approach  accuracy  macro-F1  fault rows recall events detected events correct class false alarms (healthy)
+     A  old model (v1 threshold + diagnosis)     0.632     0.158              0.005            1/12                 0/12                   0/10
+        B  Gradient Boosting, class-balanced     0.526     0.154              0.257            9/12                 1/12                   7/10
+                  C  Random Forest, balanced     0.567     0.159              0.175            8/12                 1/12                   6/10
+D  residual detector + fault-type classifier     0.461     0.146              0.302           10/12                 3/12                   8/10
+
+Best new approach: C  Random Forest, balanced
+
+--- A  old model (v1 threshold + diagnosis): per-class metrics (rows) ---
+                   precision  recall     F1  support (rows)
+normal                 0.632   1.000  0.774           20357
+hydraulic              0.893   0.006  0.011            4387
+gearbox                0.000   0.000  0.000            3252
+generator_bearing      1.000   0.002  0.003            3450
+transformer            0.000   0.000  0.000             829
+accuracy 0.632   macro-F1 0.158
+--- confusion matrix (rows) ---
+                        pred normal  pred hydraulic  pred gearbox  pred generator_bearing  pred transformer  pred other_component
+true normal                   20357               0             0                       0                 0                     0
+true hydraulic                 4347              25             0                       0                 0                    15
+true gearbox                   3247               0             0                       0                 0                     5
+true generator_bearing         3439               3             0                       6                 0                     2
+true transformer                829               0             0                       0                 0                     0
+--- event level ---
+ dataset              true detected correct_class  predicted_mostly alarm_before_fault  running_rows_in_window false_alarm
+       0 generator_bearing    False         False            normal              False                  1403.0         NaN
+       3            normal      NaN           NaN               NaN                NaN                     NaN       False
+      10           gearbox    False         False   other_component              False                   869.0         NaN
+      13            normal      NaN           NaN               NaN                NaN                     NaN       False
+      14            normal      NaN           NaN               NaN                NaN                     NaN       False
+      17            normal      NaN           NaN               NaN                NaN                     NaN       False
+      22         hydraulic    False         False            normal              False                   768.0         NaN
+      24            normal      NaN           NaN               NaN                NaN                     NaN       False
+      25            normal      NaN           NaN               NaN                NaN                     NaN       False
+      26         hydraulic    False         False            normal              False                   962.0         NaN
+      38            normal      NaN           NaN               NaN                NaN                     NaN       False
+      40 generator_bearing    False         False generator_bearing              False                  2047.0         NaN
+      42         hydraulic     True         False         hydraulic              False                   501.0         NaN
+      45         hydraulic    False         False            normal              False                   876.0         NaN
+      51           gearbox    False         False            normal              False                  1412.0         NaN
+      68       transformer    False         False            normal              False                   829.0         NaN
+      69            normal      NaN           NaN               NaN                NaN                     NaN       False
+      71            normal      NaN           NaN               NaN                NaN                     NaN       False
+      72           gearbox    False         False            normal              False                   971.0         NaN
+      73         hydraulic    False         False            normal              False                   669.0         NaN
+      84         hydraulic    False         False         hydraulic              False                   611.0         NaN
+      92            normal      NaN           NaN               NaN                NaN                     NaN       False
+
+--- C  Random Forest, balanced: per-class metrics (rows) ---
+                   precision  recall     F1  support (rows)
+normal                  0.65   0.895  0.753           20357
+hydraulic               0.00   0.000  0.000            4387
+gearbox                 0.00   0.000  0.000            3252
+generator_bearing       0.09   0.028  0.043            3450
+transformer             0.00   0.000  0.000             829
+accuracy 0.567   macro-F1 0.159
+--- confusion matrix (rows) ---
+                        pred normal  pred hydraulic  pred gearbox  pred generator_bearing  pred transformer
+true normal                   18217             805           619                     669                47
+true hydraulic                 3499               0           562                     326                 0
+true gearbox                   2528             724             0                       0                 0
+true generator_bearing         2972             380             0                      98                 0
+true transformer                829               0             0                       0                 0
+--- event level ---
+ dataset              true detected correct_class  predicted_mostly alarm_before_fault  running_rows_in_window false_alarm
+       0 generator_bearing     True         False         hydraulic              False                  1403.0         NaN
+       3            normal      NaN           NaN               NaN                NaN                     NaN       False
+      10           gearbox     True         False         hydraulic              False                   869.0         NaN
+      13            normal      NaN           NaN               NaN                NaN                     NaN        True
+      14            normal      NaN           NaN               NaN                NaN                     NaN       False
+      17            normal      NaN           NaN               NaN                NaN                     NaN        True
+      22         hydraulic    False         False            normal              False                   768.0         NaN
+      24            normal      NaN           NaN               NaN                NaN                     NaN       False
+      25            normal      NaN           NaN               NaN                NaN                     NaN        True
+      26         hydraulic     True         False           gearbox              False                   962.0         NaN
+      38            normal      NaN           NaN               NaN                NaN                     NaN        True
+      40 generator_bearing     True          True generator_bearing              False                  2047.0         NaN
+      42         hydraulic    False         False           gearbox              False                   501.0         NaN
+      45         hydraulic    False         False            normal              False                   876.0         NaN
+      51           gearbox     True         False         hydraulic               True                  1412.0         NaN
+      68       transformer    False         False            normal              False                   829.0         NaN
+      69            normal      NaN           NaN               NaN                NaN                     NaN        True
+      71            normal      NaN           NaN               NaN                NaN                     NaN        True
+      72           gearbox     True         False         hydraulic              False                   971.0         NaN
+      73         hydraulic     True         False generator_bearing               True                   669.0         NaN
+      84         hydraulic     True         False           gearbox               True                   611.0         NaN
+      92            normal      NaN           NaN               NaN                NaN                     NaN       False
+
+=== X  leakage demo: + logbook status flags + random row split (INVALID) ===
+accuracy 1.000, macro-F1 1.000  <- looks excellent, but it reads the logbook and tests on rows next to training rows of the same event.
